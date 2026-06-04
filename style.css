@@ -3221,3 +3221,205 @@ body.game-ready .loader-card h1 b{color:#ffd16d}
 @keyframes entryCardIn{from{opacity:0;transform:translateY(18px) scale(.96);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
 @keyframes loaderAppleFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.04)}}
 @keyframes buttonReveal{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+
+
+/* =========================================================
+   V13.1 NOVA ENTRADA FUNCIONAL
+   Entrada reconstruída: aparece, libera botão e sai de verdade.
+========================================================= */
+.loading-screen{
+  position:fixed!important;
+  inset:0!important;
+  z-index:500!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:18px!important;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255,210,120,.18), transparent 35%),
+    radial-gradient(circle at 50% 78%, rgba(104,216,255,.10), transparent 42%),
+    rgba(3,5,12,.82)!important;
+  backdrop-filter:blur(10px)!important;
+  opacity:1!important;
+  visibility:visible!important;
+  transition:opacity .42s ease, visibility .42s ease!important;
+}
+.loading-screen.hidden{
+  display:none!important;
+}
+.loading-screen.entry-exit{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+.entry-card{
+  position:relative;
+  width:min(560px,94vw);
+  min-height:430px;
+  padding:26px;
+  border-radius:34px;
+  overflow:hidden;
+  display:grid;
+  justify-items:center;
+  align-content:center;
+  gap:14px;
+  border:1px solid rgba(255,216,130,.22);
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255,216,130,.16), transparent 38%),
+    linear-gradient(180deg, rgba(25,30,44,.96), rgba(8,11,21,.94));
+  box-shadow:0 34px 100px rgba(0,0,0,.55), 0 0 90px rgba(255,205,105,.10);
+  animation:entryCardRise .65s cubic-bezier(.2,.8,.2,1) both;
+}
+.entry-card:before{
+  content:"";
+  position:absolute;
+  inset:-45%;
+  background:conic-gradient(from 0deg, transparent, rgba(255,216,130,.18), transparent, rgba(255,111,136,.10), transparent);
+  animation:spinRing 10s linear infinite;
+  pointer-events:none;
+}
+.entry-card:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(110deg, transparent 0 35%, rgba(255,255,255,.08) 48%, transparent 62% 100%);
+  transform:translateX(-120%);
+  animation:entryLightSweep 2.8s ease-in-out infinite;
+  pointer-events:none;
+}
+.entry-card > *{
+  position:relative;
+  z-index:2;
+}
+.entry-topline{
+  position:absolute;
+  top:18px;
+  left:18px;
+  right:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  color:var(--muted);
+  font-size:.78rem;
+  font-weight:900;
+}
+.entry-topline span{
+  display:inline-flex;
+  align-items:center;
+  height:28px;
+  padding:0 10px;
+  border-radius:999px;
+  background:#ffd16d;
+  color:#171208;
+  font-weight:1000;
+}
+.entry-orb{
+  position:relative;
+  width:150px;
+  height:150px;
+  display:grid;
+  place-items:center;
+  margin-top:16px;
+}
+.entry-orb i{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  border:1px solid rgba(255,216,130,.20);
+  box-shadow:0 0 45px rgba(255,190,95,.14), inset 0 0 42px rgba(255,190,95,.06);
+  animation:spinRing 7s linear infinite;
+}
+.entry-orb:before,
+.entry-orb:after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  border:1px dashed rgba(255,255,255,.14);
+  animation:spinRing 12s linear infinite reverse;
+}
+.entry-orb:before{inset:14px}
+.entry-orb:after{inset:30px;animation-duration:8s}
+.entry-orb strong{
+  font-size:5.4rem;
+  filter:drop-shadow(0 18px 22px rgba(0,0,0,.42)) drop-shadow(0 0 24px rgba(255,200,100,.28));
+  animation:entryAppleFloat 1.9s ease-in-out infinite;
+}
+.entry-card h1{
+  margin:0;
+  text-align:center;
+  font-size:clamp(1.75rem,4vw,2.7rem);
+  line-height:.95;
+  letter-spacing:-.07em;
+}
+.entry-card p{
+  margin:0;
+  text-align:center;
+  color:var(--muted);
+  font-weight:800;
+}
+.entry-progress{
+  width:min(430px,82vw);
+  height:12px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.09);
+}
+.entry-progress em{
+  display:block;
+  width:0%;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#ffd16d,#ff6f88,#68d8ff);
+  box-shadow:0 0 22px rgba(255,200,95,.35);
+  transition:width .25s ease;
+}
+.entry-card .primary.big{
+  min-width:210px;
+  min-height:52px;
+  margin-top:4px;
+}
+.entry-safe{
+  color:rgba(226,232,240,.54);
+  font-size:.78rem;
+  text-align:center;
+}
+body.entry-ready .entry-card{
+  border-color:rgba(255,216,130,.36);
+}
+body.entry-ready .entry-card .primary.big:not(.hidden){
+  animation:entryButtonIn .32s ease both;
+}
+@keyframes entryCardRise{
+  from{opacity:0;transform:translateY(18px) scale(.96);filter:blur(8px)}
+  to{opacity:1;transform:none;filter:none}
+}
+@keyframes entryLightSweep{
+  0%,35%{transform:translateX(-120%)}
+  70%,100%{transform:translateX(120%)}
+}
+@keyframes entryAppleFloat{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-8px) scale(1.04)}
+}
+@keyframes entryButtonIn{
+  from{opacity:0;transform:translateY(8px) scale(.97)}
+  to{opacity:1;transform:none}
+}
+@media(max-width:760px){
+  .entry-card{
+    min-height:390px;
+    padding:22px 18px;
+    border-radius:28px;
+  }
+  .entry-orb{
+    width:128px;
+    height:128px;
+  }
+  .entry-orb strong{
+    font-size:4.5rem;
+  }
+  .entry-card .primary.big{
+    width:100%;
+  }
+}

@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const VERSION = '13.0.0-entry-animation-hotfix';
+  const VERSION = '13.1.0-new-entry-functional';
   const BASE_SAVE_KEY = 'maca_clicker_v10_world_pets_save';
   const AUTH_KEY = 'maca_clicker_auth_profiles_v1';
   const SESSION_KEY = 'maca_clicker_auth_session_v1';
@@ -904,6 +904,7 @@ function render(){ updatePremiumStatus(); try{ renderHud(); renderQuickShop(); c
 
   function loop(){ const t=now(), dt=Math.min(2,(t-lastTick)/1000); lastTick=t; if(visible){ const ag=autoGain()*dt; if(ag>0){ state.fruits+=ag; state.stats.total+=ag; dirty=true; } state.stats.play+=dt; } updateEvents(); maintainPersistentRain(); checkAdminCommand(); if(t>state.combo.expires) state.combo.count=0; if(t-lastSave>5000 && dirty){ save(); lastSave=t; } const interval = fxMode()==='low' ? 260 : 120; if(t-lastHud>interval){ renderHud(); lastHud=t; } if(t-ambientTimer>(fxMode()==='low'?999999:560)){ ambientLux(); ambientTimer=t; } requestAnimationFrame(loop); }
   
+  
   function init(){
     bindDom();
     load();
@@ -911,59 +912,78 @@ function render(){ updatePremiumStatus(); try{ renderHud(); renderQuickShop(); c
     setupAppleMotion();
     buttonRipples();
 
+    let entryUnlocked = false;
+    let entryClosed = false;
     let progress = 0;
-    let loadDone = false;
-    const setLoaderProgress = value => {
+
+    const setEntryText = text => {
+      if(dom.loaderStatusText) dom.loaderStatusText.textContent = text;
+    };
+
+    const setProgress = value => {
       progress = Math.max(progress, Math.min(100, value));
       if(dom.loaderBar) dom.loaderBar.style.width = progress + '%';
-      if(dom.loaderStatusText){
-        dom.loaderStatusText.textContent =
-          progress < 40 ? 'Carregando mundo...' :
-          progress < 75 ? 'Preparando animações...' :
-          progress < 100 ? 'Sincronizando progresso...' :
-          'Pronto para entrar.';
+      if(progress < 35) setEntryText('Carregando seu pomar...');
+      else if(progress < 70) setEntryText('Preparando maçãs, pets e eventos...');
+      else if(progress < 100) setEntryText('Finalizando entrada...');
+      else setEntryText('Pronto. Pode entrar no jogo.');
+    };
+
+    const unlockEntry = () => {
+      if(entryUnlocked) return;
+      entryUnlocked = true;
+      setProgress(100);
+      document.body.classList.add('entry-ready');
+      if(dom.startBtn){
+        dom.startBtn.classList.remove('hidden');
+        dom.startBtn.disabled = false;
+        dom.startBtn.textContent = 'Entrar no jogo';
       }
     };
 
-    const unlockStart = () => {
-      if(loadDone) return;
-      loadDone = true;
-      setLoaderProgress(100);
-      dom.startBtn?.classList.remove('hidden');
-      if(dom.startBtn) dom.startBtn.textContent = 'Entrar no jogo';
-      document.body.classList.add('game-ready');
+    const closeEntry = () => {
+      if(entryClosed) return;
+      entryClosed = true;
+      if(dom.loadingScreen){
+        dom.loadingScreen.classList.add('entry-exit');
+        setTimeout(()=>{
+          dom.loadingScreen?.classList.add('hidden');
+          dom.loadingScreen?.setAttribute('aria-hidden','true');
+        }, 480);
+      }
     };
 
-    const enterGame = () => {
+    const startGame = () => {
+      unlockEntry();
       if(!currentProfile()){
         showLogin();
-        unlockStart();
+        setEntryText('Faça login para continuar.');
         return;
       }
-      if(dom.loadingScreen){
-        dom.loadingScreen.classList.add('closing');
-        setTimeout(()=>dom.loadingScreen?.classList.add('hidden'), 520);
-      }
+      closeEntry();
       music();
-      if(!state.settings.introSeen) playIntro();
-      else if(!state.settings.seenStory) openTutorial();
+      setTimeout(()=>{
+        if(!state.settings.introSeen) playIntro();
+        else if(!state.settings.seenStory) openTutorial();
+      }, 520);
     };
 
     const loadTimer = setInterval(()=>{
-      setLoaderProgress(progress + 18 + Math.random()*16);
+      setProgress(progress + 22 + Math.random()*18);
       if(progress >= 100){
         clearInterval(loadTimer);
-        unlockStart();
+        unlockEntry();
       }
-    }, 150);
+    }, 140);
 
-    setTimeout(unlockStart, 1500);
-    setTimeout(()=>{ if(dom.loadingScreen && !dom.loadingScreen.classList.contains('hidden')) unlockStart(); }, 3200);
+    setTimeout(unlockEntry, 1200);
+    setTimeout(()=>{ if(!entryClosed) unlockEntry(); }, 2500);
 
-    if(dom.startBtn) dom.startBtn.onclick = enterGame;
+    if(dom.startBtn) dom.startBtn.onclick = startGame;
+
     if(dom.loginBtn) dom.loginBtn.onclick = () => {
       handleLogin();
-      if(currentProfile()) enterGame();
+      if(currentProfile()) startGame();
     };
     if(dom.loginPassword) dom.loginPassword.addEventListener('keydown',e=>{ if(e.key==='Enter') dom.loginBtn.click(); });
     if(dom.loginName) dom.loginName.addEventListener('keydown',e=>{ if(e.key==='Enter') dom.loginBtn.click(); });
@@ -995,8 +1015,9 @@ function render(){ updatePremiumStatus(); try{ renderHud(); renderQuickShop(); c
     document.addEventListener('click',e=>{ if(e.target.matches('button,.card,.item')) touchActivity(); });
     ['mousemove','keydown','touchstart','pointerdown','scroll'].forEach(evt=>window.addEventListener(evt,touchActivity,{passive:true}));
     document.addEventListener('visibilitychange',()=>{ visible=!document.hidden; if(!visible) save(); }); window.addEventListener('beforeunload',save); window.addEventListener('resize',()=>{document.body.dataset.fx=fxMode(); renderQuickShop(); if(window.innerWidth <= 760 && state.screen==='shop'){ document.querySelector('.center')?.scrollTo({top:0,behavior:'auto'}); }});
-    setScreen(state.screen||'home'); render(); updateProfileBadge(); setupActivityWatcher(); requestAnimationFrame(loop); if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js?v=13.0.0-entry-animation-hotfix').catch(()=>{}); }
+    setScreen(state.screen||'home'); render(); updateProfileBadge(); setupActivityWatcher(); requestAnimationFrame(loop); if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js?v=13.1.0-new-entry-functional').catch(()=>{}); }
   }
+
 
   init();
 })();
