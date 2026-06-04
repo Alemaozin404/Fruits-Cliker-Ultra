@@ -1,38 +1,45 @@
-# 🍎 Maçã Clicker Ultra
+# Maçã Clicker Ultra
 
-**Entre no pomar mais viciante, bonito e poderoso do universo clicker.**
+**Maçã Clicker Ultra** é uma experiência clicker cinematográfica, viciante e premium, criada para PC e celular.
 
-Maçã Clicker Ultra é uma experiência de evolução onde cada clique te aproxima de um império de maçãs, pets raros, mundos especiais, bosses gigantes e recompensas cada vez mais insanas.
+Clique, evolua, desbloqueie mundos, colete pets raros, enfrente bosses, participe de eventos globais e transforme uma simples maçã em um império visual cheio de progresso, brilho e poder.
 
-Com visual premium, atmosfera cinematográfica e uma jogabilidade feita para PC e celular, o jogo mistura progresso, coleção, eventos e estratégia em uma jornada simples de começar, mas difícil de dominar.
+## Uma experiência de clique com cara de jogo premium
 
-## ✨ O que te espera
+Cada toque importa. Cada evolução muda sua força. Cada mundo traz uma nova sensação visual.
 
-- Clique na maçã para crescer do zero até números absurdos.
-- Compre upgrades e aumente sua produção.
-- Abra ovos e colecione pets com raridades diferentes.
-- Encontre pets lendários, míticos e secretos.
-- Desbloqueie mundos com temas únicos.
-- Enfrente bosses temporários com recompensas especiais.
-- Participe de eventos com multiplicadores e efeitos visuais.
-- Use códigos promocionais e desbloqueie prêmios.
-- Equipe skins e auras para deixar sua maçã com estilo próprio.
-- Evolua, prestigie e prove que seu pomar é o mais forte.
+O jogo mistura progressão incremental, recompensas, skins, auras, pets, eventos e desafios em uma interface dark, luxuosa e feita para parecer viva.
 
-## 🌌 Uma experiência premium
+## Destaques
 
-O jogo foi pensado para ter uma identidade moderna, escura, elegante e cinematográfica. A maçã central tem aura, brilho, impacto e presença. Cada tela foi feita para parecer viva, com transições suaves, cards organizados e uma sensação de progresso constante.
+- Clique na maçã para crescer cada vez mais.
+- Compre upgrades e aumente seu poder.
+- Desbloqueie mundos com multiplicadores únicos.
+- Abra ovos e colete pets de diferentes raridades.
+- Encontre pets secretos extremamente raros.
+- Enfrente bosses com tempo limitado.
+- Use tickets especiais para invocar desafios.
+- Participe de eventos com bônus globais.
+- Use códigos promocionais para ganhar recompensas.
+- Personalize sua maçã com skins e auras.
+- Jogue no PC ou no celular com visual adaptado.
 
-## 🥚 Pets, ovos e segredos
+## Visual cinematográfico
 
-Cada ovo pode trazer uma surpresa. Os pets ajudam no progresso, aumentam seu poder e ficam organizados por força. Do gato inicial até a fênix lendária, cada pet tem seu valor. E para os jogadores mais sortudos, existe um segredo quase impossível de encontrar.
+O jogo foi pensado para ter atmosfera, brilho, profundidade e sensação de impacto.
 
-## 👑 Bosses e eventos
+A maçã central possui aura, partículas, efeitos de clique, animações suaves e resposta visual a cada ação do jogador.
 
-Os bosses aparecem por tempo limitado e ficam mais fortes conforme o jogador evolui. Eventos especiais mudam a atmosfera do jogo, ativam efeitos visuais e deixam a partida mais intensa.
+No celular, a experiência foi ajustada para parecer um app moderno, com navegação inferior, HUD limpo e interface confortável para toque.
 
-## 🍏 Jogue, evolua e domine
+## Progressão desafiadora
 
-Maçã Clicker Ultra é para quem gosta de evolução, coleção, dificuldade, recompensas e aquele sentimento de “só mais um clique”.
+O jogo não foi feito para acabar rápido.
 
-**Prepare-se para transformar uma simples maçã em um império.**
+A evolução exige tempo, estratégia, upgrades certos, boas escolhas de pets, uso inteligente de eventos e força suficiente para derrotar bosses cada vez mais fortes.
+
+## Jogue, evolua e domine o pomar
+
+Entre no Maçã Clicker Ultra, colete seu primeiro fruto e comece uma jornada de evolução, poder e estilo.
+
+O pomar está esperando.
