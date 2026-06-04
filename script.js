@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const VERSION = '12.9.0-admin-cinema-codes-private';
+  const VERSION = '13.0.0-entry-animation-hotfix';
   const BASE_SAVE_KEY = 'maca_clicker_v10_world_pets_save';
   const AUTH_KEY = 'maca_clicker_auth_profiles_v1';
   const SESSION_KEY = 'maca_clicker_auth_session_v1';
@@ -103,7 +103,7 @@
   let state = defaultState(), dirty = true, lastTick = now(), lastSave = now(), lastHud = 0, lastFloat = 0, audio = null, musicTimer = null, visible = true, lastPetSig = '', ambientTimer = 0, rainTicker = 0, adminLastCommand = '', hudMemory = {}, introTimer = null, tutorialTimer = null, tutorialIndex = 0, featuredCode = '', afkTimer = null, afkCountdown = null, remoteAdminCodes = {}, globalDb = null, globalMode = 'local';
   const dom = {};
 
-  function bindDom(){ ['loadingScreen','loaderBar','startBtn','introCinematic','introTitle','introLine','introProgress','skipIntroBtn','introContinueBtn','storyModal','closeStoryBtn','tutorialTitle','tutorialDesc','tutorialProgress','tutorialStepsWrap','tutorialSkipBtn','bossCinematic','bossCinematicName','tutorialSpotlight','toastStack','particleLayer','mainNav','mobileMenuBtn','worldSubtitle','eventTitle','eventHint','fruitCount','clickStat','autoStat','multiStat','petStat','worldStat','worldIcon','worldName','comboText','offlineText','passMini','bossMini','bossAlert','bossAlertName','bossAlertTimer','bossAlertLife','petOrbit','appleBtn','appleSkin','floatLayer','claimDailyBtn','openBestEggBtn','summonBossBtn','worldGrid','shopSubtitle','shopList','eggGrid','petList','bossName','bossDesc','bossLife','bossTicketBtn','weeklyBossBtn','eventList','passLevelText','passBar','passRewards','missionList','rankingGrid','skinGrid','featuredCodeLabel','featuredCodeDesc','featuredCodeChip','revealCodeBtn','useFeaturedCodeBtn','codeShowcase','codeInput','codeBtn','soundBtn','musicBtn','perfBtn','saveBox','saveBtn','exportBtn','importBtn','resetBtn','auraGrid','loginOverlay','loginName','loginPassword','loginBtn','loginHint','premiumKeyInput','activatePremiumBtn','premiumStatusText','premiumPassBadge','passPremiumHint','premiumThanksModal','premiumThanksTitle','premiumThanksText','premiumThanksBenefits','premiumThanksCloseBtn','profileBadge','afkOverlay','afkCountdown','afkYesBtn','quickShopPanel','quickShopToggle','quickShopList','quickShopHint','openFullShopBtn'].forEach(id=>dom[id]=$('#'+id)); }
+  function bindDom(){ ['loadingScreen','loaderBar','loaderStatusText','startBtn','introCinematic','introTitle','introLine','introProgress','skipIntroBtn','introContinueBtn','storyModal','closeStoryBtn','tutorialTitle','tutorialDesc','tutorialProgress','tutorialStepsWrap','tutorialSkipBtn','bossCinematic','bossCinematicName','tutorialSpotlight','toastStack','particleLayer','mainNav','mobileMenuBtn','worldSubtitle','eventTitle','eventHint','fruitCount','clickStat','autoStat','multiStat','petStat','worldStat','worldIcon','worldName','comboText','offlineText','passMini','bossMini','bossAlert','bossAlertName','bossAlertTimer','bossAlertLife','petOrbit','appleBtn','appleSkin','floatLayer','claimDailyBtn','openBestEggBtn','summonBossBtn','worldGrid','shopSubtitle','shopList','eggGrid','petList','bossName','bossDesc','bossLife','bossTicketBtn','weeklyBossBtn','eventList','passLevelText','passBar','passRewards','missionList','rankingGrid','skinGrid','featuredCodeLabel','featuredCodeDesc','featuredCodeChip','revealCodeBtn','useFeaturedCodeBtn','codeShowcase','codeInput','codeBtn','soundBtn','musicBtn','perfBtn','saveBox','saveBtn','exportBtn','importBtn','resetBtn','auraGrid','loginOverlay','loginName','loginPassword','loginBtn','loginHint','premiumKeyInput','activatePremiumBtn','premiumStatusText','premiumPassBadge','passPremiumHint','premiumThanksModal','premiumThanksTitle','premiumThanksText','premiumThanksBenefits','premiumThanksCloseBtn','profileBadge','afkOverlay','afkCountdown','afkYesBtn','quickShopPanel','quickShopToggle','quickShopList','quickShopHint','openFullShopBtn'].forEach(id=>dom[id]=$('#'+id)); }
   function currentProfile(){ try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'null')}catch{return null} }
   function saveKey(){ const p=currentProfile(); return p?.id ? `${BASE_SAVE_KEY}_${p.id}` : BASE_SAVE_KEY; }
   function uid(){ return 'MCU-'+Math.random().toString(36).slice(2,8).toUpperCase()+'-'+Date.now().toString(36).toUpperCase(); }
@@ -903,28 +903,101 @@ function render(){ updatePremiumStatus(); try{ renderHud(); renderQuickShop(); c
   function renderSettings(){ if(!dom.soundBtn || !dom.musicBtn || !dom.perfBtn) return; dom.soundBtn.textContent=state.settings.sound?'🔊 Som ligado':'🔇 Som desligado'; dom.musicBtn.textContent=state.settings.music?'🎵 Música ligada':'🎵 Música desligada'; dom.perfBtn.textContent='✨ Efeitos: '+(state.settings.perf==='auto'?'Auto':state.settings.perf==='low'?'Leve':'Alto'); document.body.dataset.fx=fxMode(); }
 
   function loop(){ const t=now(), dt=Math.min(2,(t-lastTick)/1000); lastTick=t; if(visible){ const ag=autoGain()*dt; if(ag>0){ state.fruits+=ag; state.stats.total+=ag; dirty=true; } state.stats.play+=dt; } updateEvents(); maintainPersistentRain(); checkAdminCommand(); if(t>state.combo.expires) state.combo.count=0; if(t-lastSave>5000 && dirty){ save(); lastSave=t; } const interval = fxMode()==='low' ? 260 : 120; if(t-lastHud>interval){ renderHud(); lastHud=t; } if(t-ambientTimer>(fxMode()==='low'?999999:560)){ ambientLux(); ambientTimer=t; } requestAnimationFrame(loop); }
-  function init(){ bindDom(); load(); initGlobalSync(); setupAppleMotion(); buttonRipples(); let progress=0; const loadTimer=setInterval(()=>{ progress+=18+Math.random()*16; dom.loaderBar.style.width=Math.min(100,progress)+'%'; if(progress>=100){ clearInterval(loadTimer); dom.startBtn.classList.remove('hidden'); } },160);
-    dom.startBtn.onclick=()=>{ if(!currentProfile()){ showLogin(); return; } dom.loadingScreen.style.opacity='0'; setTimeout(()=>dom.loadingScreen.remove(),450); music(); if(!state.settings.introSeen) playIntro(); else if(!state.settings.seenStory) openTutorial(); };
-    if(dom.loginBtn) dom.loginBtn.onclick=()=>{ handleLogin(); dom.loadingScreen.style.opacity='0'; setTimeout(()=>dom.loadingScreen.remove(),450); music(); if(!state.settings.introSeen) playIntro(); else if(!state.settings.seenStory) openTutorial(); };
-    if(dom.loginPassword) dom.loginPassword.onkeydown=e=>{ if(e.key==='Enter') dom.loginBtn.click(); };
-    if(dom.afkYesBtn) dom.afkYesBtn.onclick=confirmActive;
-    dom.skipIntroBtn.onclick=finishIntro;
-    dom.introContinueBtn.onclick=finishIntro;
+  
+  function init(){
+    bindDom();
+    load();
+    initGlobalSync();
+    setupAppleMotion();
+    buttonRipples();
+
+    let progress = 0;
+    let loadDone = false;
+    const setLoaderProgress = value => {
+      progress = Math.max(progress, Math.min(100, value));
+      if(dom.loaderBar) dom.loaderBar.style.width = progress + '%';
+      if(dom.loaderStatusText){
+        dom.loaderStatusText.textContent =
+          progress < 40 ? 'Carregando mundo...' :
+          progress < 75 ? 'Preparando animações...' :
+          progress < 100 ? 'Sincronizando progresso...' :
+          'Pronto para entrar.';
+      }
+    };
+
+    const unlockStart = () => {
+      if(loadDone) return;
+      loadDone = true;
+      setLoaderProgress(100);
+      dom.startBtn?.classList.remove('hidden');
+      if(dom.startBtn) dom.startBtn.textContent = 'Entrar no jogo';
+      document.body.classList.add('game-ready');
+    };
+
+    const enterGame = () => {
+      if(!currentProfile()){
+        showLogin();
+        unlockStart();
+        return;
+      }
+      if(dom.loadingScreen){
+        dom.loadingScreen.classList.add('closing');
+        setTimeout(()=>dom.loadingScreen?.classList.add('hidden'), 520);
+      }
+      music();
+      if(!state.settings.introSeen) playIntro();
+      else if(!state.settings.seenStory) openTutorial();
+    };
+
+    const loadTimer = setInterval(()=>{
+      setLoaderProgress(progress + 18 + Math.random()*16);
+      if(progress >= 100){
+        clearInterval(loadTimer);
+        unlockStart();
+      }
+    }, 150);
+
+    setTimeout(unlockStart, 1500);
+    setTimeout(()=>{ if(dom.loadingScreen && !dom.loadingScreen.classList.contains('hidden')) unlockStart(); }, 3200);
+
+    if(dom.startBtn) dom.startBtn.onclick = enterGame;
+    if(dom.loginBtn) dom.loginBtn.onclick = () => {
+      handleLogin();
+      if(currentProfile()) enterGame();
+    };
+    if(dom.loginPassword) dom.loginPassword.addEventListener('keydown',e=>{ if(e.key==='Enter') dom.loginBtn.click(); });
+    if(dom.loginName) dom.loginName.addEventListener('keydown',e=>{ if(e.key==='Enter') dom.loginBtn.click(); });
+
+    dom.skipIntroBtn.onclick=()=>finishIntro();
+    dom.introContinueBtn.onclick=()=>finishIntro();
+    dom.tutorialSkipBtn.onclick=closeTutorial;
     dom.closeStoryBtn.onclick=()=>{ const steps=[...dom.tutorialStepsWrap.querySelectorAll('[data-step]')]; if(tutorialIndex<steps.length-1){ clearInterval(tutorialTimer); setTutorialStep(tutorialIndex+1); } else closeTutorial(); };
-    dom.tutorialSkipBtn.onclick=()=>{ closeTutorial(); };
-    dom.mobileMenuBtn.onclick=()=>dom.mainNav.classList.toggle('open'); dom.mainNav.onclick=e=>{ const b=e.target.closest('button[data-screen]'); if(b) setScreen(b.dataset.screen); };
-    dom.quickShopToggle.onclick=()=>{ if(innerWidth<=980) dom.quickShopPanel.classList.toggle('open-mobile'); else { state.settings.quickCollapsed=!state.settings.quickCollapsed; dirty=true; renderQuickShop(); } };
+    dom.appleBtn.onclick=e=>clickApple(e);
+    dom.claimDailyBtn.onclick=claimDaily; dom.openBestEggBtn.onclick=openBestEgg; dom.summonBossBtn.onclick=summonBoss;
+    dom.bossTicketBtn.onclick=summonBoss; dom.weeklyBossBtn.onclick=()=>summonBoss(true);
     dom.openFullShopBtn.onclick=()=>setScreen('shop');
-    dom.appleBtn.onclick=clickApple; dom.claimDailyBtn.onclick=claimDaily; dom.openBestEggBtn.onclick=openBestEgg; dom.summonBossBtn.onclick=()=>startBoss('normal'); dom.bossTicketBtn.onclick=()=>startBoss('normal'); dom.weeklyBossBtn.onclick=()=>startBoss('weekly'); dom.revealCodeBtn.onclick=()=>revealFeaturedCode(false); dom.useFeaturedCodeBtn.onclick=useFeaturedCode; dom.codeBtn.onclick=redeemCode; dom.codeInput.onkeydown=e=>{if(e.key==='Enter')redeemCode();};
-    dom.soundBtn.onclick=()=>{state.settings.sound=!state.settings.sound; sound(500,.1); dirty=true; renderSettings();}; dom.musicBtn.onclick=()=>{state.settings.music=!state.settings.music; music(); dirty=true; renderSettings();}; dom.perfBtn.onclick=()=>{state.settings.perf=state.settings.perf==='auto'?'high':state.settings.perf==='high'?'low':'auto'; document.body.dataset.fx=fxMode(); dirty=true; renderSettings();};
-    dom.saveBtn.onclick=()=>{save();toast('Jogo salvo.');}; dom.exportBtn.onclick=()=>{dom.saveBox.value=btoa(unescape(encodeURIComponent(JSON.stringify(state)))); dom.saveBox.select(); toast('Save exportado.');}; dom.importBtn.onclick=()=>{try{state=merge(defaultState(), JSON.parse(decodeURIComponent(escape(atob(dom.saveBox.value.trim()))))); normalizeState(); save(); applyVisualState(); render(); toast('Save importado.');}catch{toast('Save inválido.');}}; dom.passRewards && (dom.passRewards.onclick=e=>{ const b=e.target.closest('[data-pass-claim]'); if(b) claimPassReward(b.dataset.passClaim); });
+    dom.revealCodeBtn && (dom.revealCodeBtn.onclick=()=>revealFeaturedCode(true));
+    dom.useFeaturedCodeBtn && (dom.useFeaturedCodeBtn.onclick=useFeaturedCode);
+    dom.codeBtn.onclick=redeemCode;
+    dom.soundBtn.onclick=()=>{ state.settings.sound=!state.settings.sound; dirty=true; render(); };
+    dom.musicBtn.onclick=()=>{ state.settings.music=!state.settings.music; if(state.settings.music) music(); dirty=true; render(); };
+    dom.perfBtn.onclick=()=>{ const order=['auto','high','low']; state.settings.perf=order[(order.indexOf(state.settings.perf)+1)%order.length]; document.body.dataset.fx=fxMode(); dirty=true; render(); };
+    dom.saveBtn.onclick=()=>{ save(); toast('Save atualizado.','good'); };
+    dom.exportBtn.onclick=()=>{ dom.saveBox.value=btoa(unescape(encodeURIComponent(JSON.stringify(state)))); toast('Save exportado.','good'); };
+    dom.importBtn.onclick=()=>{ try{ state={...defaultState(),...JSON.parse(decodeURIComponent(escape(atob(dom.saveBox.value.trim()))))}; dirty=true; save(); render(); toast('Save importado.','good'); }catch(e){ toast('Save inválido.','bad'); } };
+    dom.passRewards && (dom.passRewards.onclick=e=>{ const b=e.target.closest('[data-pass-claim]'); if(b) claimPassReward(b.dataset.passClaim); });
     dom.activatePremiumBtn && (dom.activatePremiumBtn.onclick=activatePremiumKey);
     dom.premiumKeyInput?.addEventListener('keydown',e=>{ if(e.key==='Enter') activatePremiumKey(); });
-    dom.resetBtn.onclick=()=>{ if(confirm('Resetar todo o progresso V10?')){ localStorage.removeItem(saveKey()); state=defaultState(); save(); location.reload(); } };
-    window.addEventListener('storage',e=>{ if(e.key===ADMIN_KEY) checkAdminCommand(); });
+    dom.premiumThanksCloseBtn && (dom.premiumThanksCloseBtn.onclick=()=>dom.premiumThanksModal?.classList.add('hidden'));
+    dom.resetBtn.onclick=()=>{ if(confirm('Resetar todo o save?')){ localStorage.removeItem(saveKey()); state=defaultState(); dirty=true; location.reload(); } };
+    dom.mobileMenuBtn.onclick=()=>dom.mainNav.classList.toggle('open'); dom.mainNav.onclick=e=>{ const b=e.target.closest('button[data-screen]'); if(b) setScreen(b.dataset.screen); };
+    dom.quickShopToggle.onclick=()=>{ if(innerWidth<=980) dom.quickShopPanel.classList.toggle('open-mobile'); else { state.settings.quickCollapsed=!state.settings.quickCollapsed; dirty=true; renderQuickShop(); } };
+    document.addEventListener('click',e=>{ if(e.target.matches('button,.card,.item')) touchActivity(); });
+    ['mousemove','keydown','touchstart','pointerdown','scroll'].forEach(evt=>window.addEventListener(evt,touchActivity,{passive:true}));
     document.addEventListener('visibilitychange',()=>{ visible=!document.hidden; if(!visible) save(); }); window.addEventListener('beforeunload',save); window.addEventListener('resize',()=>{document.body.dataset.fx=fxMode(); renderQuickShop(); if(window.innerWidth <= 760 && state.screen==='shop'){ document.querySelector('.center')?.scrollTo({top:0,behavior:'auto'}); }});
-    setScreen(state.screen||'home'); render(); updateProfileBadge(); setupActivityWatcher(); requestAnimationFrame(loop); if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js?v=12.9.0-admin-cinema-codes-private').catch(()=>{}); }
+    setScreen(state.screen||'home'); render(); updateProfileBadge(); setupActivityWatcher(); requestAnimationFrame(loop); if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js?v=13.0.0-entry-animation-hotfix').catch(()=>{}); }
   }
+
   init();
 })();
   function claimPassReward(id){
