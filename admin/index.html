@@ -2,114 +2,99 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#070816" />
-  <title>Admin • Maçã Clicker Ultra</title>
-  <link rel="stylesheet" href="admin.css?v=12.7.0-premium-pass-admin-keys" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#070914" />
+  <title>Admin Cinema — Maçã Clicker Ultra</title>
+  <link rel="stylesheet" href="admin.css?v=12.9.0-admin-cinema-codes-private" />
 </head>
 <body>
+  <div class="admin-bg" aria-hidden="true"><span></span><span></span><span></span></div>
+
   <main class="admin-shell">
-    <section id="lock" class="panel lock">
-      <span class="chip">/admin secreto</span>
-      <h1>Painel Admin</h1>
-      <p>Entre para ativar eventos, disparar boss, criar códigos e enviar comandos globais reais para todos os jogadores conectados, quando o Firebase estiver configurado.</p>
-      <input id="adminPass" type="password" placeholder="Senha admin" />
-      <button id="unlockBtn">Entrar</button>
-      <small>Senha padrão: <b>admin2117</b>. Para produção, troque em <b>global-config.js</b>.</small>
-    </section>
-
-    <section id="panel" class="panel hidden">
-      <div class="head">
-        <div>
-          <span class="chip">Maçã Clicker Ultra</span>
-          <h1>Console Admin Cinema</h1>
-          <p>Comandos usam Firebase Realtime Database para chegar em todos os jogadores online. Se o Firebase não estiver configurado, cai em modo local.</p>
-        </div>
-        <a href="../index.html">Voltar ao jogo</a>
+    <header class="admin-hero">
+      <div>
+        <span class="chip">Painel Global Cinema</span>
+        <h1>Admin Maçã Clicker Ultra</h1>
+        <p>Controle eventos globais, códigos privados, keys Premium e histórico do jogo em um painel cinematográfico.</p>
       </div>
+      <div class="admin-status-card">
+        <small>Status Firebase</small>
+        <b id="firebaseStatus">Carregando...</b>
+        <em id="lastCommandText">Nenhum comando enviado ainda</em>
+      </div>
+    </header>
 
-      <div class="grid">
-        <article class="card">
-          <h2>Eventos globais</h2>
-          <label>Duração em minutos</label>
-          <input id="eventMinutes" type="number" value="8" min="1" />
-          <button data-event="double">Ativar Evento 2x + chuva</button>
-          <button data-event="welison">Ativar Welison azul</button>
-          <button data-event="rare">Ativar Evento raro</button>
-          <button data-event="boss" class="danger">Invocar Boss global</button>
-        </article>
+    <section class="admin-grid-main">
+      <aside class="admin-side">
+        <button class="admin-tab active" data-admin-tab="events">⚡ Eventos</button>
+        <button class="admin-tab" data-admin-tab="codes">🎁 Códigos</button>
+        <button class="admin-tab" data-admin-tab="premium">💎 Premium</button>
+        <button class="admin-tab" data-admin-tab="history">📜 Histórico</button>
+        <button class="admin-tab" data-admin-tab="tools">🛠️ Ferramentas</button>
+      </aside>
 
-        <article class="card">
-          <h2>Dar maçãs</h2>
-          <label>Quantidade</label>
-          <input id="fruitAmount" type="number" value="10000" min="0" />
-          <button id="giveFruits">Enviar recompensa global</button>
-        </article>
-
-        <article class="card wide">
-          <h2>Diagnóstico Firebase</h2>
-          <p>Se aparecer erro de comando global, normalmente é Realtime Database não criado, databaseURL errado ou regras bloqueando leitura/escrita.</p>
-          <pre>{
-  "rules": {
-    ".read": true,
-    ".write": true
-  }
-}</pre>
-        </article>
-
-        <article class="card wide">
-          <h2>Criar código</h2>
-          <div class="code-grid">
-            <input id="codeName" placeholder="NOME_DO_CODIGO" />
-            <input id="codeFruits" type="number" placeholder="Maçãs" value="5000" />
-            <input id="codeXp" type="number" placeholder="XP passe" value="50" />
-            <select id="codeSkin">
-              <option value="">Sem skin</option>
-              <option value="gold">Maçã dourada</option>
-              <option value="royal">Maçã realeza</option>
-              <option value="nebula">Maçã nebulosa</option>
-              <option value="voidlord">Maçã Lorde Void</option>
-            </select>
-            <select id="codeAura">
-              <option value="">Sem aura</option>
-              <option value="gold">Aura Dourada</option>
-              <option value="blue">Aura Azul</option>
-              <option value="crimson">Aura Carmesim</option>
-              <option value="void">Aura Void</option>
-            </select>
+      <section class="admin-content">
+        <section id="tab-events" class="admin-screen active">
+          <div class="section-title"><h2>Eventos globais</h2><p>Ative eventos para todos os jogadores conectados ao Firebase.</p></div>
+          <div class="cinema-grid">
+            <article class="admin-card"><span class="chip">2x</span><h3>Evento 2x</h3><p>Ativa multiplicador 2x global com chuva de maçãs.</p><div class="field-row"><input id="doubleDuration" type="number" min="1" value="30" /><small>min</small></div><button class="primary" id="startDoubleBtn">Ativar 2x global</button></article>
+            <article class="admin-card"><span class="chip blue">Welison</span><h3>Welison 5x</h3><p>Ativa evento azul 5x para todos.</p><div class="field-row"><input id="welisonDuration" type="number" min="1" value="15" /><small>min</small></div><button class="primary blue-btn" id="startWelisonBtn">Ativar Welison</button></article>
+            <article class="admin-card"><span class="chip danger">Boss</span><h3>Boss global</h3><p>Invoca boss global para jogadores receberem o comando.</p><input id="bossNameInput" placeholder="Nome do boss" value="Rei Caveira do Pomar" /><button class="primary danger-btn" id="startBossBtn">Invocar boss</button></article>
+            <article class="admin-card"><span class="chip green">Raro</span><h3>Evento raro</h3><p>Ativa comando raro para campanhas especiais.</p><select id="rareType"><option value="rare-auto">Auto raro</option><option value="rare-legend">Lendário</option><option value="rare-crit">Crítico</option></select><button class="secondary" id="startRareBtn">Ativar raro</button></article>
           </div>
-          <button id="createCode">Criar / Atualizar código</button>
-          <pre id="codesList">Nenhum código admin criado.</pre>
-        </article>
-      </div>
+        </section>
 
-      <div id="globalStatus" class="log">Conectando ao sistema global...</div>
-      <div id="log" class="log">Pronto.</div>
-    </section>
-  
-    <section class="admin-card premium-admin-card">
-      <span class="chip">Premium</span>
-      <h2>Criar key Premium</h2>
-      <p>Gere keys para ativar Premium no jogo. As keys podem durar 1 semana, 15 dias, 30 dias, 3 meses, 1 ano ou ser permanentes.</p>
-      <div class="admin-grid">
-        <select id="premiumKeyDuration">
-          <option value="7d">1 semana</option>
-          <option value="15d">15 dias</option>
-          <option value="30d">30 dias</option>
-          <option value="3m">3 meses</option>
-          <option value="1y">1 ano</option>
-          <option value="permanent">Permanente</option>
-        </select>
-        <input id="premiumKeyCustom" placeholder="Key personalizada opcional" />
-      </div>
-      <button id="createPremiumKeyBtn" class="primary">Criar key Premium</button>
-      <div id="premiumKeyResult" class="admin-result">Nenhuma key criada ainda.</div>
-    </section>
+        <section id="tab-codes" class="admin-screen">
+          <div class="section-title"><h2>Códigos privados</h2><p>Crie códigos para campanhas. Eles não aparecem mais para todos no jogo.</p></div>
+          <div class="admin-card wide">
+            <div class="form-grid">
+              <label>Código<input id="codeName" placeholder="EX: LIVE100K" /></label>
+              <label>Maçãs<input id="codeFruits" type="number" min="0" value="10000" /></label>
+              <label>XP Passe<input id="codePassXp" type="number" min="0" value="15" /></label>
+              <label>Tickets Boss<input id="codeBossTickets" type="number" min="0" value="0" /></label>
+              <label>Dias Premium<input id="codePremiumDays" type="number" min="0" value="0" /></label>
+              <label>Limite de usos<input id="codeMaxUses" type="number" min="0" value="0" /></label>
+              <label>Evento opcional<select id="codeEvent"><option value="">Nenhum</option><option value="double">2x</option><option value="welison">Welison 5x</option></select></label>
+              <label>Mensagem<input id="codeMessage" placeholder="Código resgatado com sucesso!" /></label>
+            </div>
+            <button class="primary" id="createCodeBtn">Criar código privado</button>
+            <div id="createdCodeResult" class="result-box">Nenhum código criado ainda.</div>
+          </div>
+          <div class="admin-card wide"><div class="card-head"><h3>Códigos ativos</h3><button class="secondary mini" id="refreshCodesBtn">Atualizar</button></div><div id="codesList" class="admin-list"></div></div>
+        </section>
 
+        <section id="tab-premium" class="admin-screen">
+          <div class="section-title"><h2>Keys Premium</h2><p>Crie keys de 1 semana, 15 dias, 30 dias, 3 meses, 1 ano ou permanentes.</p></div>
+          <div class="admin-card wide">
+            <div class="form-grid two">
+              <label>Duração<select id="premiumKeyDuration"><option value="7d">1 semana</option><option value="15d">15 dias</option><option value="30d">30 dias</option><option value="3m">3 meses</option><option value="1y">1 ano</option><option value="permanent">Permanente</option></select></label>
+              <label>Key personalizada opcional<input id="premiumKeyCustom" placeholder="EX: WILLIAM-PREMIUM" /></label>
+            </div>
+            <button class="primary gold-btn" id="createPremiumKeyBtn">Criar key Premium</button>
+            <div id="premiumKeyResult" class="result-box">Nenhuma key criada ainda.</div>
+          </div>
+          <div class="admin-card wide"><div class="card-head"><h3>Keys criadas</h3><button class="secondary mini" id="refreshPremiumKeysBtn">Atualizar</button></div><div id="premiumKeysList" class="admin-list"></div></div>
+        </section>
+
+        <section id="tab-history" class="admin-screen">
+          <div class="section-title"><h2>Histórico de códigos</h2><p>Veja resgates feitos pelos jogadores. Essa é a área correta para histórico de códigos.</p></div>
+          <div class="admin-card wide"><div class="card-head"><h3>Últimos resgates</h3><button class="secondary mini" id="refreshHistoryBtn">Atualizar</button></div><div id="codeHistoryList" class="admin-list history-list"></div></div>
+        </section>
+
+        <section id="tab-tools" class="admin-screen">
+          <div class="section-title"><h2>Ferramentas rápidas</h2><p>Comandos extras para manutenção e testes.</p></div>
+          <div class="cinema-grid">
+            <article class="admin-card"><h3>Enviar maçãs global</h3><p>Cria comando global de recompensa.</p><input id="globalFruitAmount" type="number" value="10000" /><button class="primary" id="sendFruitsBtn">Enviar comando</button></article>
+            <article class="admin-card"><h3>Diagnóstico</h3><p>Verifica conexão com Firebase e caminhos principais.</p><button class="secondary" id="diagnosticBtn">Rodar diagnóstico</button><div id="diagnosticResult" class="result-box small">Aguardando...</div></article>
+          </div>
+        </section>
+      </section>
+    </section>
   </main>
+
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-database-compat.js"></script>
-  <script src="../global-config.js?v=12.7.0-premium-pass-admin-keys"></script>
-  <script src="admin.js?v=12.7.0-premium-pass-admin-keys"></script>
+  <script src="../global-config.js?v=12.9.0-admin-cinema-codes-private"></script>
+  <script src="admin.js?v=12.9.0-admin-cinema-codes-private"></script>
 </body>
 </html>

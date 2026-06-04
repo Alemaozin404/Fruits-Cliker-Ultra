@@ -19,7 +19,9 @@ O jogo mistura progressão incremental, recompensas, skins, auras, pets, eventos
 - Encontre pets secretos extremamente raros.
 - Enfrente bosses com tempo limitado.
 - Participe de eventos com bônus globais.
-- Use códigos promocionais para ganhar recompensas.
+- Use códigos promocionais privados.
+- Ative Premium com keys especiais.
+- Libere recompensas Premium no Passe da Maçã.
 - Personalize sua maçã com skins e auras.
 - Jogue no PC ou no celular com visual adaptado.
 

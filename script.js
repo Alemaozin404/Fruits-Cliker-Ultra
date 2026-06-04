@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const VERSION = '12.7.0-premium-pass-admin-keys';
+  const VERSION = '12.9.0-admin-cinema-codes-private';
   const BASE_SAVE_KEY = 'maca_clicker_v10_world_pets_save';
   const AUTH_KEY = 'maca_clicker_auth_profiles_v1';
   const SESSION_KEY = 'maca_clicker_auth_session_v1';
@@ -103,7 +103,7 @@
   let state = defaultState(), dirty = true, lastTick = now(), lastSave = now(), lastHud = 0, lastFloat = 0, audio = null, musicTimer = null, visible = true, lastPetSig = '', ambientTimer = 0, rainTicker = 0, adminLastCommand = '', hudMemory = {}, introTimer = null, tutorialTimer = null, tutorialIndex = 0, featuredCode = '', afkTimer = null, afkCountdown = null, remoteAdminCodes = {}, globalDb = null, globalMode = 'local';
   const dom = {};
 
-  function bindDom(){ ['loadingScreen','loaderBar','startBtn','introCinematic','introTitle','introLine','introProgress','skipIntroBtn','introContinueBtn','storyModal','closeStoryBtn','tutorialTitle','tutorialDesc','tutorialProgress','tutorialStepsWrap','tutorialSkipBtn','bossCinematic','bossCinematicName','tutorialSpotlight','toastStack','particleLayer','mainNav','mobileMenuBtn','worldSubtitle','eventTitle','eventHint','fruitCount','clickStat','autoStat','multiStat','petStat','worldStat','worldIcon','worldName','comboText','offlineText','passMini','bossMini','bossAlert','bossAlertName','bossAlertTimer','bossAlertLife','petOrbit','appleBtn','appleSkin','floatLayer','claimDailyBtn','openBestEggBtn','summonBossBtn','worldGrid','shopSubtitle','shopList','eggGrid','petList','bossName','bossDesc','bossLife','bossTicketBtn','weeklyBossBtn','eventList','passLevelText','passBar','passRewards','missionList','rankingGrid','skinGrid','featuredCodeLabel','featuredCodeDesc','featuredCodeChip','revealCodeBtn','useFeaturedCodeBtn','codeShowcase','codeInput','codeBtn','soundBtn','musicBtn','perfBtn','saveBox','saveBtn','exportBtn','importBtn','resetBtn','auraGrid','loginOverlay','loginName','loginPassword','loginBtn','loginHint','premiumKeyInput','activatePremiumBtn','premiumStatusText','premiumPassBadge','passPremiumHint','profileBadge','afkOverlay','afkCountdown','afkYesBtn','quickShopPanel','quickShopToggle','quickShopList','quickShopHint','openFullShopBtn'].forEach(id=>dom[id]=$('#'+id)); }
+  function bindDom(){ ['loadingScreen','loaderBar','startBtn','introCinematic','introTitle','introLine','introProgress','skipIntroBtn','introContinueBtn','storyModal','closeStoryBtn','tutorialTitle','tutorialDesc','tutorialProgress','tutorialStepsWrap','tutorialSkipBtn','bossCinematic','bossCinematicName','tutorialSpotlight','toastStack','particleLayer','mainNav','mobileMenuBtn','worldSubtitle','eventTitle','eventHint','fruitCount','clickStat','autoStat','multiStat','petStat','worldStat','worldIcon','worldName','comboText','offlineText','passMini','bossMini','bossAlert','bossAlertName','bossAlertTimer','bossAlertLife','petOrbit','appleBtn','appleSkin','floatLayer','claimDailyBtn','openBestEggBtn','summonBossBtn','worldGrid','shopSubtitle','shopList','eggGrid','petList','bossName','bossDesc','bossLife','bossTicketBtn','weeklyBossBtn','eventList','passLevelText','passBar','passRewards','missionList','rankingGrid','skinGrid','featuredCodeLabel','featuredCodeDesc','featuredCodeChip','revealCodeBtn','useFeaturedCodeBtn','codeShowcase','codeInput','codeBtn','soundBtn','musicBtn','perfBtn','saveBox','saveBtn','exportBtn','importBtn','resetBtn','auraGrid','loginOverlay','loginName','loginPassword','loginBtn','loginHint','premiumKeyInput','activatePremiumBtn','premiumStatusText','premiumPassBadge','passPremiumHint','premiumThanksModal','premiumThanksTitle','premiumThanksText','premiumThanksBenefits','premiumThanksCloseBtn','profileBadge','afkOverlay','afkCountdown','afkYesBtn','quickShopPanel','quickShopToggle','quickShopList','quickShopHint','openFullShopBtn'].forEach(id=>dom[id]=$('#'+id)); }
   function currentProfile(){ try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'null')}catch{return null} }
   function saveKey(){ const p=currentProfile(); return p?.id ? `${BASE_SAVE_KEY}_${p.id}` : BASE_SAVE_KEY; }
   function uid(){ return 'MCU-'+Math.random().toString(36).slice(2,8).toUpperCase()+'-'+Date.now().toString(36).toUpperCase(); }
@@ -185,7 +185,7 @@
 
   function tutorialTargetFor(i){
     const shopTarget = window.innerWidth <= 760 ? dom.mainNav?.querySelector('[data-screen="shop"]') : dom.quickShopPanel;
-    const map=[dom.appleBtn, shopTarget, dom.openBestEggBtn, dom.summonBossBtn, dom.codeShowcase, dom.mainNav?.querySelector('[data-screen="worlds"]')];
+    const map=[dom.appleBtn, shopTarget, dom.openBestEggBtn, dom.summonBossBtn, dom.codeInput, dom.mainNav?.querySelector('[data-screen="worlds"]')];
     return map[i] || dom.appleBtn;
   }
 
@@ -276,7 +276,7 @@
     if(dom.worldIcon) dom.worldIcon.textContent=world().icon;
     if(dom.worldName) dom.worldName.textContent=world().name;
   }
-  function setScreen(screen){ const previous=state.screen; state.screen=screen; const center=document.querySelector('.center'); const isMobile=innerWidth<=760; if(center){ center.classList.remove('nav-soft-enter'); void center.offsetWidth; center.classList.add('nav-soft-enter'); } $$('.screen').forEach(s=>{ const on=s.id===`screen-${screen}`; s.classList.toggle('active',on); if(on){ s.classList.remove('screen-swap'); void s.offsetWidth; s.classList.add('screen-swap'); } }); $$('#mainNav button').forEach(b=>{ const active=b.dataset.screen===screen; b.classList.toggle('active',active); if(active){ b.classList.remove('nav-pulse'); void b.offsetWidth; b.classList.add('nav-pulse'); if(isMobile) b.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'}); } }); dom.mainNav?.classList.remove('open'); if(isMobile) dom.quickShopPanel?.classList.remove('open-mobile'); render(); if(previous!==screen && center){ requestAnimationFrame(()=>center.scrollTo({top:0,behavior:isMobile?'auto':'smooth'})); } if(screen==='codes'){ if(!state.settings.codeShowSeen){ state.settings.codeShowSeen=true; setTimeout(()=>revealFeaturedCode(false),320); } else rotateFeaturedCode(); } dirty=true; }
+  function setScreen(screen){ const previous=state.screen; state.screen=screen; const center=document.querySelector('.center'); const isMobile=innerWidth<=760; if(center){ center.classList.remove('nav-soft-enter'); void center.offsetWidth; center.classList.add('nav-soft-enter'); } $$('.screen').forEach(s=>{ const on=s.id===`screen-${screen}`; s.classList.toggle('active',on); if(on){ s.classList.remove('screen-swap'); void s.offsetWidth; s.classList.add('screen-swap'); } }); $$('#mainNav button').forEach(b=>{ const active=b.dataset.screen===screen; b.classList.toggle('active',active); if(active){ b.classList.remove('nav-pulse'); void b.offsetWidth; b.classList.add('nav-pulse'); if(isMobile) b.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'}); } }); dom.mainNav?.classList.remove('open'); if(isMobile) dom.quickShopPanel?.classList.remove('open-mobile'); render(); if(previous!==screen && center){ requestAnimationFrame(()=>center.scrollTo({top:0,behavior:isMobile?'auto':'smooth'})); } if(screen==='codes'){ /* códigos privados: sem showcase público */ } dirty=true; }
 
   function clickApple(ev){
     const t=now(); if(t>state.combo.expires) state.combo.count=0; state.combo.count++; state.combo.best=Math.max(state.combo.best,state.combo.count); state.combo.expires=t+1700;
@@ -451,7 +451,124 @@
   function checkAdminCommand(){
     try{ const cmd=JSON.parse(localStorage.getItem(ADMIN_KEY)||'null'); runAdminCommand(cmd); }catch{}
   }
-  function redeemCode(){ const code=(dom.codeInput.value||'').trim().toUpperCase(); const rewards={V10CINEMA:{fruits:9000,xp:60},WELISON5X:{fruits:6500,xp:50},MACADOURADA:{skin:'gold',fruits:3500},BOSSUPDATE:{fruits:8000,xp:70},HARDMODE:{fruits:12000,xp:90},AURACINEMA:{aura:'blue',fruits:6000}}; Object.assign(rewards, adminCodes()); const r=rewards[code]; if(!r){ dom.codeShowcase?.classList.add('code-error'); setTimeout(()=>dom.codeShowcase?.classList.remove('code-error'),520); return toast('Código inválido.'); } if(state.codes[code]) return toast('Código já usado.'); state.codes[code]=true; if(r.fruits){state.fruits+=r.fruits;state.stats.total+=r.fruits;} if(r.xp) addPassXp(r.xp); if(r.skin){state.unlockedSkins[r.skin]=true;state.skin=r.skin;} if(r.aura){state.unlockedAuras[r.aura]=true;state.aura=r.aura;} toast(`Código ${code} resgatado!`); dom.codeShowcase?.classList.remove('code-success'); void dom.codeShowcase?.offsetWidth; dom.codeShowcase?.classList.add('code-success'); sound(840,.18); setTimeout(()=>sound(1040,.12,'triangle'),120); dirty=true; dom.codeInput.value=''; if(dom.featuredCodeChip && code===featuredCode){ dom.featuredCodeChip.classList.add('used'); } render(); }
+  
+  function applyCodeReward(data){
+    const fruits = Number(data.fruits || data.amount || 0);
+    if(fruits) addFruits(Math.floor(fruits * premiumMultiplier('rewards')));
+    if(data.passXp) addPassXp(Number(data.passXp));
+    if(data.bossTickets) state.tickets.boss = (state.tickets.boss||0) + Number(data.bossTickets);
+    if(data.skin && !state.skins.includes(data.skin)) state.skins.push(data.skin);
+    if(data.aura && !state.auras.includes(data.aura)) state.auras.push(data.aura);
+    if(data.event === 'welison') startEvent('welison', Number(data.duration || 10*60000));
+    if(data.event === 'double') startEvent('double', Number(data.duration || 10*60000));
+    if(data.premiumDays){
+      const addMs = Number(data.premiumDays) * 86400000;
+      const base = isPremiumActive() && !state.premium.permanent ? Math.max(now(), Number(state.premium.expiresAt||0)) : now();
+      state.premium = {
+        ...(state.premium || {}),
+        active:true,
+        permanent:false,
+        activatedAt: state.premium?.activatedAt || now(),
+        expiresAt: base + addMs,
+        lastClaimDay: state.premium?.lastClaimDay || ''
+      };
+      updatePremiumStatus();
+    }
+  }
+
+
+  async function redeemCode(){
+    const code = String(dom.codeInput?.value || '').trim().toUpperCase();
+    if(!code) return toast('Digite um código.', 'bad');
+    if(!state.usedCodes) state.usedCodes = [];
+    if(state.usedCodes.includes(code)) return toast('Você já usou esse código.', 'bad');
+
+    const builtIn = {
+      V10CINEMA:{fruits:18000,passXp:18,msg:'Código cinema resgatado!'},
+      WELISON5X:{fruits:25000,event:'welison',duration:10*60000,passXp:25,msg:'Welison ativado por 10 minutos!'},
+      MACADOURADA:{fruits:50000,skin:'gold',passXp:20,msg:'Maçã dourada liberada!'},
+      BOSSUPDATE:{fruits:15000,bossTickets:1,passXp:18,msg:'Pacote boss resgatado!'},
+      HARDMODE:{fruits:30000,passXp:30,msg:'Hard mode recompensado!'},
+      AURACINEMA:{fruits:35000,aura:'gold',passXp:25,msg:'Aura cinema resgatada!'}
+    };
+
+    let data = builtIn[code] || null;
+    let source = data ? 'built-in' : 'none';
+
+    try{
+      if(globalDb){
+        const snap = await globalDb.ref('codes/'+code).get();
+        if(snap.exists()){
+          data = snap.val();
+          source = 'firebase';
+        }
+      }
+    }catch(err){
+      console.warn('global code read failed', err);
+    }
+
+    if(!data){
+      try{
+        const localCodes = JSON.parse(localStorage.getItem('maca_clicker_admin_codes_v1') || '{}');
+        if(localCodes[code]){
+          data = localCodes[code];
+          source = 'local-admin';
+        }
+      }catch(err){}
+    }
+
+    if(!data) return toast('Código inválido ou expirado.', 'bad');
+    if(data.disabled) return toast('Código desativado pelo admin.', 'bad');
+
+    const expiresAt = Number(data.expiresAt || 0);
+    if(expiresAt && expiresAt < now()) return toast('Esse código expirou.', 'bad');
+    if(data.maxUses && Number(data.usedCount||0) >= Number(data.maxUses)) return toast('Esse código atingiu o limite de usos.', 'bad');
+
+    const profileId = state.profileId || state.playerName || 'local';
+    if(data.usedBy && typeof data.usedBy === 'object' && data.usedBy[profileId]) return toast('Você já usou esse código.', 'bad');
+
+    applyCodeReward(data);
+    state.usedCodes.push(code);
+
+    const historyPayload = {
+      code,
+      source,
+      player: state.playerName || 'Jogador',
+      profileId,
+      usedAt: now(),
+      reward: {
+        fruits: Number(data.fruits || data.amount || 0),
+        passXp: Number(data.passXp || 0),
+        bossTickets: Number(data.bossTickets || 0),
+        premiumDays: Number(data.premiumDays || 0)
+      }
+    };
+
+    try{
+      if(source === 'firebase' && globalDb){
+        const updates = {};
+        updates['codes/'+code+'/usedCount'] = Number(data.usedCount || 0) + 1;
+        updates['codes/'+code+'/usedBy/'+profileId] = now();
+        updates['codeHistory/'+now()+'_'+Math.random().toString(36).slice(2,8)] = historyPayload;
+        await globalDb.ref().update(updates);
+      }
+    }catch(err){
+      console.warn('global code history failed', err);
+    }
+
+    try{
+      const localHistory = JSON.parse(localStorage.getItem('maca_code_history_local_v1') || '[]');
+      localHistory.unshift(historyPayload);
+      localStorage.setItem('maca_code_history_local_v1', JSON.stringify(localHistory.slice(0,80)));
+    }catch(err){}
+
+    dom.codeInput && (dom.codeInput.value='');
+    dirty=true;
+    render();
+    save();
+    toast(data.msg || 'Código resgatado com sucesso!', 'good');
+  }
+
   function updateRanking(){ localStorage.setItem(RANK_KEY, JSON.stringify({clicks:state.stats.clicks, apples:state.stats.total, prestige:state.prestige, boss:state.stats.bossDamage, play:state.stats.play})); }
 
   
@@ -496,6 +613,20 @@
     dom.passPremiumHint && (dom.passPremiumHint.textContent = isPremiumActive() ? 'Trilha premium liberada. Ganhos e recompensas melhorados.' : 'Ative o Premium para liberar a trilha dourada.');
   }
 
+  async 
+  function showPremiumThanksPopup(permanent=false, durationLabel=''){
+    if(!dom.premiumThanksModal) return;
+    const title = permanent ? 'Obrigado eterno pelo apoio Premium!' : 'Obrigado por ajudar o Maçã Clicker Ultra!';
+    const text = permanent
+      ? 'Sua key permanente foi ativada. Esse apoio eterno fortalece o jogo e libera uma jornada Premium sem prazo para acabar.'
+      : `Sua key Premium foi ativada${durationLabel ? ' por ' + durationLabel : ''}. Obrigado por ajudar o projeto a continuar crescendo. Aproveite bastante e espera maner: vem muita coisa boa pela frente.`;
+
+    dom.premiumThanksTitle && (dom.premiumThanksTitle.textContent = title);
+    dom.premiumThanksText && (dom.premiumThanksText.textContent = text);
+    dom.premiumThanksModal.classList.remove('hidden');
+  }
+
+
   async function activatePremiumKey(){
     const raw = sanitizeKey(dom.premiumKeyInput?.value);
     if(!raw) return toast('Digite uma key premium.', 'bad');
@@ -530,11 +661,21 @@
       'permanent': 0,
       'perm': 0
     };
+    const labelMap = {
+      '7d':'1 semana',
+      '15d':'15 dias',
+      '30d':'30 dias',
+      '3m':'3 meses',
+      '1y':'1 ano',
+      'permanent':'para sempre',
+      'perm':'para sempre'
+    };
     const permanent = duration === 'permanent' || duration === 'perm';
     const addMs = durationMsMap[duration] ?? 30*86400000;
     const base = isPremiumActive() && !state.premium.permanent ? Math.max(now(), Number(state.premium.expiresAt||0)) : now();
 
     state.premium = {
+      ...(state.premium || {}),
       active:true,
       key:raw,
       permanent,
@@ -564,7 +705,9 @@
     render();
     save();
     toast(permanent ? 'Premium permanente ativado!' : 'Premium ativado com sucesso!', 'good');
+    showPremiumThanksPopup(permanent, labelMap[duration] || '');
   }
+
 
   function grantPremiumActivationBonus(){
     if(state.premium?.activationBonusClaimed) return;
@@ -699,48 +842,59 @@ function render(){ updatePremiumStatus(); try{ renderHud(); renderQuickShop(); c
   function renderPets(){ if(!dom.eggGrid || !dom.petList) return; dom.eggGrid.innerHTML=eggs.map(e=>`<div class="card egg-card"><div class="icon">${e.icon}</div><span class="tag">${fmt(e.cost)} 🍎</span><h3>${e.name}</h3><p>${e.secretEt?'ET secreto: 0,0001% somente neste ovo.':'Chance balanceada e mais difícil.'}</p><button class="primary" data-egg="${e.id}">Abrir</button></div>`).join(''); $$('[data-egg]').forEach(b=>b.onclick=()=>openEgg(b.dataset.egg)); const pets=sortedPets(); dom.petList.innerHTML=state.pets.length?`<div class="pet-drawer"><div class="drawer-head"><b>Gavetinha de pets</b><small>Melhor no topo • pior embaixo • auto-organizado</small></div>${pets.map((p,idx)=>`<div class="item card pet-row" data-rarity="${p.rarity}"><div class="pet-rank">#${idx+1}</div><div class="icon">${p.icon}</div><div><h3>${p.name} <small>${p.rarity} • Lv ${p.level}</small></h3><p>Poder: ${petPower(p)} • Multiplicador: +${((rarities[p.rarity]?.multi||0)*(p.power||1)*Math.sqrt(p.level||1)).toFixed(2)}x • ${state.equippedPets.includes(p.uid)?'Equipado no topo':'Guardado'}</p></div><div><button class="secondary" data-equip="${p.uid}">${state.equippedPets.includes(p.uid)?'Remover':'Equipar'}</button><button class="primary" data-fuse="${p.uid}">Fundir</button></div></div>`).join('')}</div>`:'<div class="panel-soft" style="padding:16px">Você ainda não tem pets. Abra um ovo.</div>'; $$('[data-equip]').forEach(b=>b.onclick=()=>equipPet(b.dataset.equip)); $$('[data-fuse]').forEach(b=>b.onclick=()=>fusePet(b.dataset.fuse)); }
   function renderBoss(){ if(!dom.bossName || !dom.bossDesc || !dom.bossLife || !dom.eventList) return; dom.bossName.textContent=state.boss.active?state.boss.name:'Nenhum boss ativo'; dom.bossDesc.textContent=state.boss.active?`Tempo: ${clock(state.boss.ends-now())} • Vida: ${fmt(state.boss.hp)} / ${fmt(state.boss.max)} • Dano: ${fmt(state.boss.damage)}`:`Tickets: ${state.tickets.boss}. Evento automático a cada 1 hora. Boss ativo por 3 minutos. Vida escala por prestígio e kills. Ticket só vem da loja e é consumido.`; dom.bossLife.style.width=state.boss.active?`${100*state.boss.hp/state.boss.max}%`:'0%'; dom.eventList.innerHTML=[`<div class="item"><div class="icon">⚡</div><div><h3>Evento 2x</h3><p>Muda fundo, botão, partículas e multiplicador.</p></div><b>${state.event.active==='double'?'Ativo':'Em '+clock(state.event.next-now())}</b></div>`,`<div class="item"><div class="icon">💙</div><div><h3>Welison 5x</h3><p>Todo sábado às 15:30 por 1 hora. Tema azul automático.</p></div><b>${state.event.welisonEnds>now()?clock(state.event.welisonEnds-now()):'Agenda fixa'}</b></div>`,`<div class="item"><div class="icon">🌈</div><div><h3>Evento raro</h3><p>Auto 3x, crítico ou lenda 4x pode aparecer junto do 2x.</p></div><b>${state.event.rare?state.event.rare:'Sorte'}</b></div>`].join(''); }
   
+  
   function renderPass(){
     if(!dom.passRewards) return;
-    const xp = Number(state.pass?.xp || 0);
+    if(!state.pass) state.pass = {xp:0, claimed:[]};
+    if(!Array.isArray(state.pass.claimed)) state.pass.claimed = [];
+
+    const xp = Number(state.pass.xp || 0);
     const level = Math.floor(xp / 100);
     const progress = Math.max(0, Math.min(100, xp % 100));
+
     if(dom.passLevelText) dom.passLevelText.textContent = `Nível ${level} • ${progress}/100 XP`;
     if(dom.passBar) dom.passBar.style.width = progress + '%';
     updatePremiumStatus();
 
     const rewards = [
-      {lvl:1, free:'2.500 🍎', premium:'10.000 🍎 + Aura brilho'},
-      {lvl:2, free:'Bônus de clique', premium:'Pet raro garantido'},
+      {lvl:1, free:'2.500 🍎', premium:'10.000 🍎 + bônus de entrada'},
+      {lvl:2, free:'+XP do passe', premium:'Pet raro garantido'},
       {lvl:3, free:'5.000 🍎', premium:'Ticket Boss + 25.000 🍎'},
       {lvl:4, free:'Ovo prata', premium:'Ovo épico'},
       {lvl:5, free:'Skin simples', premium:'Skin premium dourada'},
       {lvl:7, free:'10.000 🍎', premium:'Boost 2x por 20 min'},
       {lvl:10, free:'Ticket Boss', premium:'3 Tickets Boss + 100.000 🍎'},
       {lvl:15, free:'Ovo raro', premium:'Ovo lendário'},
-      {lvl:20, free:'50.000 🍎', premium:'Aura Void temporária + 300.000 🍎'},
+      {lvl:20, free:'50.000 🍎', premium:'Aura Void + 300.000 🍎'},
       {lvl:30, free:'Prestígio acelerado', premium:'Pacote Supremo Premium'}
     ];
 
+    const prem = isPremiumActive();
     dom.passRewards.innerHTML = rewards.map(r=>{
-      const freeClaimed = state.pass.claimed?.includes('free-'+r.lvl);
-      const premiumClaimed = state.pass.claimed?.includes('premium-'+r.lvl);
+      const freeId = `free-${r.lvl}`;
+      const premiumId = `premium-${r.lvl}`;
+      const freeClaimed = state.pass.claimed.includes(freeId);
+      const premiumClaimed = state.pass.claimed.includes(premiumId);
       const can = level >= r.lvl;
-      const prem = isPremiumActive();
-      return `<div class="pass-row panel-soft ${can?'ready':''}">
-        <div class="pass-row-level"><b>Nível ${r.lvl}</b><small>${can?'Disponível':'Bloqueado'}</small></div>
+      return `<article class="pass-row ${can?'ready':'locked'}">
+        <div class="pass-row-level">
+          <b>Nível ${r.lvl}</b>
+          <small>${can?'Disponível':'Bloqueado'}</small>
+        </div>
         <div class="pass-track free-track">
           <span class="chip">Free</span>
           <p>${r.free}</p>
-          <button class="secondary" data-pass-claim="free-${r.lvl}" ${!can||freeClaimed?'disabled':''}>${freeClaimed?'Coletado':'Coletar'}</button>
+          <button class="secondary" data-pass-claim="${freeId}" ${!can||freeClaimed?'disabled':''}>${freeClaimed?'Coletado':'Coletar'}</button>
         </div>
         <div class="pass-track premium-track ${prem?'unlocked':'locked'}">
           <span class="chip">Premium</span>
           <p>${r.premium}</p>
-          <button class="primary" data-pass-claim="premium-${r.lvl}" ${!can||!prem||premiumClaimed?'disabled':''}>${premiumClaimed?'Coletado': prem?'Coletar':'Bloqueado'}</button>
+          <button class="primary" data-pass-claim="${premiumId}" ${!can||!prem||premiumClaimed?'disabled':''}>${premiumClaimed?'Coletado': prem?'Coletar':'Bloqueado'}</button>
         </div>
-      </div>`;
+      </article>`;
     }).join('');
   }
+
 
   function renderMissions(){ if(!dom.missionList) return; dom.missionList.innerHTML=missionDefs().map(m=>{ const claimed=state.missions[(m.kind+'Claimed')]?.[m.id]; return `<div class="item"><div class="icon">${m.icon}</div><div><h3>${m.name}</h3><p>${fmt(Math.min(m.cur,m.need))}/${fmt(m.need)} • +${m.xp} XP passe • +${fmt(m.reward)} maçãs</p><i class="life"><em style="width:${100*clamp(m.cur/m.need,0,1)}%"></em></i></div><button class="${claimed?'secondary':'primary'}" data-mission="${m.id}">${claimed?'Coletado':'Coletar'}</button></div>`; }).join(''); $$('[data-mission]').forEach(b=>b.onclick=()=>claimMission(b.dataset.mission)); }
   function renderRanking(){ if(!dom.rankingGrid) return; updateRanking(); const r=JSON.parse(localStorage.getItem(RANK_KEY)||'{}'); const data=[['👆','Top cliques',r.clicks],['🍎','Top maçãs',r.apples],['⭐','Top prestígio',r.prestige],['⚔️','Top boss damage',r.boss],['⏱️','Tempo jogado',Math.floor((r.play||0)/60)+' min']]; dom.rankingGrid.innerHTML=data.map(x=>`<div class="card"><div class="icon">${x[0]}</div><span class="tag">Ranking local</span><h3>${x[1]}</h3><p>${typeof x[2]==='number'?fmt(x[2]):x[2]}</p></div>`).join(''); }
@@ -769,7 +923,7 @@ function render(){ updatePremiumStatus(); try{ renderHud(); renderQuickShop(); c
     dom.resetBtn.onclick=()=>{ if(confirm('Resetar todo o progresso V10?')){ localStorage.removeItem(saveKey()); state=defaultState(); save(); location.reload(); } };
     window.addEventListener('storage',e=>{ if(e.key===ADMIN_KEY) checkAdminCommand(); });
     document.addEventListener('visibilitychange',()=>{ visible=!document.hidden; if(!visible) save(); }); window.addEventListener('beforeunload',save); window.addEventListener('resize',()=>{document.body.dataset.fx=fxMode(); renderQuickShop(); if(window.innerWidth <= 760 && state.screen==='shop'){ document.querySelector('.center')?.scrollTo({top:0,behavior:'auto'}); }});
-    setScreen(state.screen||'home'); render(); updateProfileBadge(); setupActivityWatcher(); requestAnimationFrame(loop); if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js?v=12.7.0-premium-pass-admin-keys').catch(()=>{}); }
+    setScreen(state.screen||'home'); render(); updateProfileBadge(); setupActivityWatcher(); requestAnimationFrame(loop); if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js?v=12.9.0-admin-cinema-codes-private').catch(()=>{}); }
   }
   init();
 })();
