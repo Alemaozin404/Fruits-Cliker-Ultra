@@ -1,5 +1,5 @@
-const CACHE='maca-v13-5-stable-rollback-no-loader';
-const VERSION='13.5.0-stable-rollback-no-loader';
+const CACHE='maca-v12-7-2-step1-premium-popup-only';
+const VERSION='12.7.2-step1-premium-popup-only';
 const ASSETS=['./','./index.html?v='+VERSION,'./style.css?v='+VERSION,'./script.js?v='+VERSION,'./global-config.js?v='+VERSION,'./manifest.webmanifest?v='+VERSION,'./admin/','./admin/index.html?v='+VERSION,'./admin/admin.css?v='+VERSION,'./admin/admin.js?v='+VERSION];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).catch(()=>{}));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim();});

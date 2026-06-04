@@ -4,17 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#060814" />
-  <meta name="description" content="Maçã Clicker Ultra V13.5 Stable Rollback" />
-  <title>Maçã Clicker Ultra V13.5 Stable Rollback</title>
-  <link rel="manifest" href="manifest.webmanifest?v=13.5.0-stable-rollback-no-loader" />
-  <link rel="stylesheet" href="style.css?v=13.5.0-stable-rollback-no-loader" />
+  <meta name="description" content="Maçã Clicker Ultra V12.7.2 Step 1 Premium Popup" />
+  <title>Maçã Clicker Ultra V12.7.2 Step 1 Premium Popup</title>
+  <link rel="manifest" href="manifest.webmanifest?v=12.7.2-step1-premium-popup-only" />
+  <link rel="stylesheet" href="style.css?v=12.7.2-step1-premium-popup-only" />
 </head>
 <body class="theme-farm" data-fx="auto">
-  <div id="loadingScreen" class="loading-screen hidden" aria-hidden="true">
+  <div id="loadingScreen" class="loading-screen">
     <div class="loader-card">
       <div class="loader-logo">🍎</div>
-      <h1>Maçã Clicker <b>V13.5</b></h1>
-      <p>Base restaurada • Admin global • Códigos privados</p>
+      <h1>Maçã Clicker <b>V12.7.2.1</b></h1>
+      <p>Global admin • Premium por key • Passe corrigido</p>
       <div class="loader-bar"><i id="loaderBar"></i></div>
       <button id="startBtn" class="primary big hidden">Jogar</button>
     </div>
@@ -104,13 +104,13 @@
   </div>
 
 
-  <div id="premiumThanksModal" class="modal premium-thanks-modal hidden">
+  <div id="premiumThanksModal" class="modal premium-thanks-modal hidden" aria-hidden="true">
     <div class="modal-box premium-thanks-box">
       <div class="premium-thanks-glow"></div>
       <span class="chip">Premium ativado</span>
       <h2 id="premiumThanksTitle">Obrigado por apoiar o Maçã Clicker Ultra!</h2>
       <p id="premiumThanksText">Seu Premium foi ativado. Aproveite vantagens, recompensas e uma jornada ainda mais poderosa.</p>
-      <div id="premiumThanksBenefits" class="premium-thanks-benefits">
+      <div class="premium-thanks-benefits">
         <span>+35% cliques</span>
         <span>+25% auto</span>
         <span>+15% sorte</span>
@@ -124,9 +124,9 @@
   <main class="app-shell">
     <aside class="side panel">
       <div class="brand">
-        <span class="version">V13.5</span>
+        <span class="version">V12.7.2.1</span>
         <h1>Maçã<br><b>Clicker</b></h1>
-        <em class="brand-cut">STABLE ROLLBACK</em>
+        <em class="brand-cut">PREMIUM PASS KEYS</em>
         <p id="worldSubtitle">Fazenda inicial • multiplicador x1</p>
       </div>
 
@@ -221,54 +221,25 @@
       <section id="screen-pass" class="screen">
         <div class="screen-head">
           <h2>Passe da Maçã</h2>
-          <p>Progrida jogando, ganhe XP, colete recompensas grátis e desbloqueie a trilha Premium com key.</p>
+          <p>Ganhe XP jogando, complete missões e desbloqueie recompensas grátis e premium.</p>
         </div>
-
-        <div class="pass-layout">
-          <div class="pass-panel panel-soft">
-            <div class="pass-title-row">
-              <div>
-                <span class="chip">Temporada ativa</span>
-                <h3 id="passLevelText">Nível 0 • 0/100 XP</h3>
-                <p id="passPremiumHint">Ative o Premium para liberar a trilha dourada.</p>
-              </div>
-              <strong id="premiumPassBadge" class="premium-pass-badge">Free</strong>
+        <div class="pass-panel panel-soft">
+          <div class="pass-title-row">
+            <div>
+              <span class="chip">Temporada ativa</span>
+              <h3 id="passLevelText">Nível 0</h3>
+              <p id="passPremiumHint">Ative o Premium para liberar a trilha dourada.</p>
             </div>
-            <div class="pass-bar"><i><em id="passBar"></em></i></div>
+            <strong id="premiumPassBadge" class="premium-pass-badge">Free</strong>
           </div>
-
-          <div class="pass-columns-head">
-            <b>Nível</b>
-            <b>Trilha grátis</b>
-            <b>Trilha Premium</b>
-          </div>
-
-          <div id="passRewards" class="pass-rewards"></div>
+          <div class="pass-bar"><i><em id="passBar"></em></i></div>
         </div>
+        <div id="passRewards" class="pass-rewards"></div>
       </section>
       <section id="screen-missions" class="screen"><div class="screen-head"><h2>Missões</h2><p>Missões diárias e semanais alimentam o passe.</p></div><div id="missionList" class="list"></div></section>
       <section id="screen-ranking" class="screen"><div class="screen-head"><h2>Ranking local</h2><p>Salvo no navegador: cliques, maçãs, prestígio, boss e tempo jogado.</p></div><div id="rankingGrid" class="grid-cards compact"></div></section>
       <section id="screen-skins" class="screen"><div class="screen-head"><h2>Skins e auras</h2><p>Troque a maçã e escolha uma aura com cor e efeitos próprios atrás dela.</p></div><div id="skinGrid" class="grid-cards compact"></div><h3>Auras</h3><div id="auraGrid" class="grid-cards compact"></div></section>
-      <section id="screen-codes" class="screen">
-        <div class="screen-head">
-          <h2>Códigos promocionais</h2>
-          <p>Os códigos são privados e divulgados apenas por eventos, lives, Discord ou campanhas oficiais. Digite seu código abaixo para resgatar.</p>
-        </div>
-        <div class="code-private-panel panel-soft">
-          <span class="chip">Resgate privado</span>
-          <h3>Digite seu código</h3>
-          <p>Por segurança, o jogo não mostra códigos disponíveis para todos. O histórico, criação e controle ficam somente no painel admin.</p>
-          <div class="code-box">
-            <input id="codeInput" placeholder="Digite o código recebido" autocomplete="off" />
-            <button id="codeBtn" class="primary">Resgatar</button>
-          </div>
-          <div class="code-rules">
-            <span>🔒 Códigos não são exibidos publicamente</span>
-            <span>⚡ Códigos podem ter recompensas especiais</span>
-            <span>✅ Cada código só pode ser usado uma vez por conta</span>
-          </div>
-        </div>
-      </section>
+      <section id="screen-codes" class="screen"><div class="screen-head"><h2>Códigos promocionais</h2><p>Use V10CINEMA, WELISON5X, MACADOURADA, BOSSUPDATE, HARDMODE, AURACINEMA ou códigos criados no /admin. Multiplicadores corrigidos para serem reais.</p></div><div id="codeShowcase" class="code-showcase panel-soft"><div><span class="chip">Código em destaque</span><h3 id="featuredCodeLabel">Surpresa cinematográfica</h3><p id="featuredCodeDesc">Revele um código com animação, preencha automaticamente e resgate direto.</p></div><div class="code-reveal-line"><b id="featuredCodeChip" class="featured-code-chip">••••••••</b><div class="row"><button id="revealCodeBtn" class="secondary">🎬 Revelar código</button><button id="useFeaturedCodeBtn" class="primary" disabled>⚡ Usar agora</button></div></div></div><div class="code-box panel-soft"><input id="codeInput" placeholder="Digite o código" /><button id="codeBtn" class="primary">Resgatar</button></div></section>
       <section id="screen-settings" class="screen">
         <div class="screen-head">
           <h2>Configurações</h2>
@@ -281,7 +252,7 @@
             <h3>Ativar Premium</h3>
             <p id="premiumStatusText">Nenhum Premium ativo.</p>
             <div class="premium-key-row">
-              <input id="premiumKeyInput" placeholder="Digite sua key Premium" />
+              <input id="premiumKeyInput" placeholder="Digite sua key premium" />
               <button id="activatePremiumBtn" class="primary">Ativar</button>
             </div>
             <div class="premium-benefits-mini">
@@ -329,7 +300,7 @@
 
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-database-compat.js"></script>
-  <script src="global-config.js?v=13.5.0-stable-rollback-no-loader"></script>
-  <script src="script.js?v=13.5.0-stable-rollback-no-loader"></script>
+  <script src="global-config.js?v=12.7.2-step1-premium-popup-only"></script>
+  <script src="script.js?v=12.7.2-step1-premium-popup-only"></script>
 </body>
 </html>

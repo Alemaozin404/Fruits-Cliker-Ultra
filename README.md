@@ -8,7 +8,7 @@ Clique, evolua, desbloqueie mundos, colete pets raros, enfrente bosses, particip
 
 Cada toque importa. Cada evolução muda sua força. Cada mundo traz uma nova sensação visual.
 
-O jogo mistura progressão incremental, recompensas, skins, auras, pets, eventos e desafios em uma interface dark, luxuosa e feita para parecer viva.
+O jogo mistura progressão incremental, recompensas, skins, auras, pets, eventos, códigos privados, Premium e desafios em uma interface dark, luxuosa e feita para parecer viva.
 
 ## Destaques
 

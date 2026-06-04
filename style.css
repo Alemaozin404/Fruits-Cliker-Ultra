@@ -2815,11 +2815,457 @@ body:after{background:radial-gradient(ellipse at center,transparent 68%,rgba(0,0
 
 
 /* =========================================================
-   V12.8 Premium Popup + Passe reorganizado + containers corrigidos
+   V12.7.1 LAYOUT + SCROLL FIX
+   Correção direta da base V12.7 enviada pelo usuário.
+   Foco: Passe, Skins/Auras, Missões e Loja rápida.
 ========================================================= */
 
+/* A gaveta central deve rolar de verdade e nunca prender tela longa. */
+.center{
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  min-height:0!important;
+  scroll-behavior:smooth;
+  overscroll-behavior:contain;
+}
+
+/* Telas longas precisam respirar e não cortar conteúdo. */
+.screen.active{
+  min-height:0!important;
+  overflow:visible!important;
+  padding-bottom:34px!important;
+}
+
+/* Skins e auras: corrige tela presa sem rolagem. */
+#screen-skins.active{
+  overflow-y:auto!important;
+  max-height:calc(100vh - 116px)!important;
+  padding-right:6px!important;
+  padding-bottom:86px!important;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,217,138,.48) rgba(255,255,255,.045);
+}
+#screen-skins::-webkit-scrollbar{width:10px}
+#screen-skins::-webkit-scrollbar-track{background:rgba(255,255,255,.045);border-radius:999px}
+#screen-skins::-webkit-scrollbar-thumb{background:linear-gradient(#ffe3a4,#ff8f62);border-radius:999px;border:2px solid rgba(8,10,20,.75)}
+#screen-skins h3{
+  margin:18px 4px 10px!important;
+  font-size:1.2rem!important;
+}
+#skinGrid,
+#auraGrid{
+  overflow:visible!important;
+  align-items:stretch!important;
+  padding-bottom:6px!important;
+}
+#skinGrid .card,
+#auraGrid .card{
+  min-height:218px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  gap:4px!important;
+  overflow:hidden!important;
+}
+#skinGrid .card p,
+#auraGrid .card p{
+  min-height:38px!important;
+}
+#skinGrid .card button,
+#auraGrid .card button{
+  margin-top:auto!important;
+}
+
+/* Passe: remove o bug de aparecer só barras Free/Premium vazias. */
+#screen-pass.active{
+  overflow-y:auto!important;
+  max-height:calc(100vh - 116px)!important;
+  padding-right:6px!important;
+  padding-bottom:72px!important;
+}
+#screen-pass .pass-panel{
+  padding:16px!important;
+  margin:0 0 12px!important;
+  min-height:0!important;
+  overflow:visible!important;
+}
+#passRewards.pass-rewards,
+.pass-rewards{
+  display:grid!important;
+  gap:10px!important;
+  overflow:visible!important;
+  max-height:none!important;
+  min-height:0!important;
+  padding-right:0!important;
+}
+.pass-row{
+  display:grid!important;
+  grid-template-columns:104px minmax(0,1fr) minmax(0,1fr)!important;
+  gap:10px!important;
+  align-items:stretch!important;
+  min-height:118px!important;
+  padding:12px!important;
+  overflow:visible!important;
+}
+.pass-row-level{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+}
+.pass-track{
+  min-width:0!important;
+  min-height:94px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:8px!important;
+  overflow:visible!important;
+}
+.pass-track .chip{
+  width:auto!important;
+  max-width:100%!important;
+  min-height:22px!important;
+  padding:5px 9px!important;
+  border-radius:999px!important;
+  line-height:1!important;
+  flex:0 0 auto!important;
+}
+.pass-track p{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  min-height:28px!important;
+  margin:0!important;
+  overflow:visible!important;
+  color:var(--text)!important;
+  line-height:1.25!important;
+}
+.pass-track button{
+  display:inline-flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+  min-height:36px!important;
+  padding:8px 10px!important;
+  flex:0 0 auto!important;
+}
+
+/* Missões: corrige proporção, botão e altura exagerada. */
+#missionList.list{
+  gap:9px!important;
+}
+#missionList .item{
+  grid-template-columns:54px minmax(0,1fr) 96px!important;
+  align-items:center!important;
+  gap:11px!important;
+  min-height:76px!important;
+  padding:11px 13px!important;
+  overflow:hidden!important;
+}
+#missionList .item .icon{
+  width:44px!important;
+  height:44px!important;
+  border-radius:14px!important;
+}
+#missionList .item h3{
+  margin:0 0 4px!important;
+  font-size:1rem!important;
+}
+#missionList .item p{
+  margin:0!important;
+  line-height:1.25!important;
+}
+#missionList .item button{
+  width:86px!important;
+  min-width:86px!important;
+  min-height:42px!important;
+  padding:8px!important;
+}
+
+/* Loja rápida: mantém compra fácil, mas com tamanho mais controlado. */
+.quick-shop{
+  min-width:280px!important;
+  max-width:320px!important;
+}
+.quick-shop-list{
+  gap:8px!important;
+}
+.quick-buy{
+  grid-template-columns:42px minmax(0,1fr)!important;
+  gap:9px!important;
+  padding:9px!important;
+  border-radius:16px!important;
+  min-height:auto!important;
+}
+.quick-buy .icon{
+  width:40px!important;
+  height:40px!important;
+  border-radius:13px!important;
+}
+.quick-buy h3{
+  font-size:.92rem!important;
+  margin:0!important;
+  line-height:1.1!important;
+}
+.quick-buy small{
+  font-size:.72rem!important;
+  line-height:1.2!important;
+  white-space:normal!important;
+}
+.quick-buy button{
+  grid-column:1/-1!important;
+  width:100%!important;
+  min-height:36px!important;
+  padding:8px 10px!important;
+  border-radius:12px!important;
+}
+
+/* Cards gerais: proporção mais estável em abas de grid. */
+@media screen and (min-width:901px){
+  .app-shell{
+    grid-template-columns:245px minmax(0,1fr) 300px!important;
+    gap:12px!important;
+    padding:12px!important;
+  }
+  .grid-cards,
+  .grid-cards.compact{
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr))!important;
+    gap:12px!important;
+  }
+  .card{
+    min-width:0!important;
+  }
+}
+
+/* Tablet/PC estreito: evita esmagar layout. */
+@media screen and (min-width:761px) and (max-width:1100px){
+  .app-shell{
+    grid-template-columns:210px minmax(0,1fr) 270px!important;
+    gap:10px!important;
+    padding:10px!important;
+  }
+  .quick-shop{
+    min-width:250px!important;
+    max-width:280px!important;
+    padding:12px!important;
+  }
+  .side{
+    padding:12px!important;
+  }
+  .main-nav button{
+    padding:8px!important;
+  }
+  .main-nav button b{
+    font-size:.78rem!important;
+  }
+}
+
+/* Mobile: mantém rolagem real e transforma linhas grandes em uma coluna. */
+@media screen and (max-width:760px){
+  #screen-skins.active,
+  #screen-pass.active{
+    max-height:none!important;
+    overflow:visible!important;
+    padding-right:0!important;
+    padding-bottom:18px!important;
+  }
+  .pass-row{
+    grid-template-columns:1fr!important;
+    min-height:0!important;
+  }
+  #missionList .item{
+    grid-template-columns:42px minmax(0,1fr)!important;
+    min-height:0!important;
+  }
+  #missionList .item button{
+    grid-column:1/-1!important;
+    width:100%!important;
+  }
+}
+
+
+/* =========================================================
+   V12.7.2 PASS TABS REBUILD
+   Refaz a aba Passe com estrutura estável e sem sobreposição.
+========================================================= */
+#screen-pass.active{
+  overflow-y:auto!important;
+  padding-bottom:82px!important;
+}
+#screen-pass .screen-head{
+  margin-bottom:12px!important;
+}
+#screen-pass .pass-panel{
+  display:grid!important;
+  gap:14px!important;
+  margin:0 0 16px!important;
+  overflow:visible!important;
+}
+.pass-title-row{
+  align-items:flex-start!important;
+  gap:12px!important;
+  margin:0!important;
+}
+.pass-title-row > div{
+  flex:1 1 auto!important;
+  min-width:0!important;
+}
+.pass-title-row h3{
+  margin:10px 0 0!important;
+  line-height:1.05!important;
+}
+#passPremiumHint{
+  margin:10px 0 0!important;
+  color:var(--muted)!important;
+  line-height:1.32!important;
+}
+#passRewards.pass-rewards{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:14px!important;
+  padding:0 0 10px!important;
+  overflow:visible!important;
+}
+.pass-tier{
+  display:grid!important;
+  grid-template-columns:132px minmax(0,1fr) minmax(0,1fr)!important;
+  gap:12px!important;
+  align-items:stretch!important;
+  padding:14px!important;
+  min-height:166px!important;
+  overflow:visible!important;
+}
+.pass-tier.ready{
+  border-color:rgba(255,217,138,.24)!important;
+}
+.pass-tier-level{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:flex-start!important;
+  gap:8px!important;
+  min-width:0!important;
+}
+.pass-tier-chip{
+  display:inline-flex!important;
+  align-items:center!important;
+  min-height:34px!important;
+  padding:0 12px!important;
+  border-radius:999px!important;
+  background:rgba(255,217,138,.14)!important;
+  border:1px solid rgba(255,217,138,.22)!important;
+  color:#ffe7a4!important;
+  font-weight:950!important;
+  white-space:nowrap!important;
+}
+.pass-tier-level small{
+  color:var(--muted)!important;
+  font-size:.86rem!important;
+}
+.pass-lane{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:10px!important;
+  padding:14px!important;
+  border-radius:18px!important;
+  border:1px solid rgba(255,255,255,.09)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(0,0,0,.12))!important;
+  overflow:hidden!important;
+}
+.pass-lane-free{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04)!important;
+}
+.pass-lane-premium{
+  background:linear-gradient(145deg,rgba(255,217,138,.12),rgba(255,95,143,.07))!important;
+}
+.pass-lane-premium.locked{
+  filter:saturate(.78)!important;
+  opacity:.82!important;
+}
+.pass-lane-head{
+  display:flex!important;
+  align-items:center!important;
+  min-height:22px!important;
+}
+.pass-lane-head .chip{
+  flex:0 0 auto!important;
+}
+.pass-lane-body{
+  flex:1 1 auto!important;
+  display:grid!important;
+  gap:6px!important;
+  align-content:start!important;
+  min-width:0!important;
+}
+.pass-lane-body h4{
+  margin:0!important;
+  font-size:1.04rem!important;
+  line-height:1.16!important;
+  letter-spacing:-.02em!important;
+  color:var(--text)!important;
+  overflow-wrap:anywhere!important;
+}
+.pass-lane-body p{
+  margin:0!important;
+  color:var(--muted)!important;
+  line-height:1.25!important;
+  font-size:.9rem!important;
+}
+.pass-lane button{
+  width:100%!important;
+  min-height:42px!important;
+  border-radius:14px!important;
+  margin-top:auto!important;
+}
+
+/* compat: se o cache renderizar o HTML antigo, ainda fica legível */
+.pass-row{
+  display:grid!important;
+  grid-template-columns:120px minmax(0,1fr) minmax(0,1fr)!important;
+  gap:12px!important;
+  padding:14px!important;
+  min-height:154px!important;
+}
+.pass-row-level{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  gap:8px!important;
+}
+.pass-track{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:10px!important;
+  padding:14px!important;
+  border-radius:18px!important;
+  border:1px solid rgba(255,255,255,.09)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(0,0,0,.12))!important;
+}
+.pass-track p{color:var(--text)!important}
+.pass-track button{margin-top:auto!important}
+
+@media screen and (max-width:900px){
+  .pass-tier,
+  .pass-row{
+    grid-template-columns:1fr!important;
+    min-height:0!important;
+  }
+  .pass-tier-level,
+  .pass-row-level{
+    align-items:flex-start!important;
+  }
+}
+
+
+/* =========================================================
+   V12.7.2 STEP 1 — SOMENTE POPUP PREMIUM
+========================================================= */
 .premium-thanks-modal{
-  z-index:220!important;
+  z-index:240!important;
 }
 .premium-thanks-box{
   position:relative;
@@ -2867,266 +3313,8 @@ body:after{background:radial-gradient(ellipse at center,transparent 68%,rgba(0,0
   font-weight:900;
   font-size:.84rem;
 }
-
-.pass-layout{
-  flex:1 1 auto;
-  min-height:0;
-  display:grid;
-  grid-template-rows:auto auto minmax(0,1fr);
-  gap:10px;
-  overflow:hidden;
-}
-.pass-panel{
-  flex:0 0 auto!important;
-  padding:16px!important;
-  margin:0!important;
-  min-height:0!important;
-  overflow:hidden!important;
-}
-.pass-title-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  margin-bottom:12px;
-}
-.pass-title-row h3{
-  margin:8px 0 4px;
-  font-size:1.35rem;
-  line-height:1;
-}
-.pass-title-row p{
-  margin:0;
-  color:var(--muted);
-}
-.premium-pass-badge{
-  flex:0 0 auto;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:92px;
-  min-height:38px;
-  border-radius:999px;
-  padding:0 14px;
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.12);
-  color:var(--muted);
-}
-.premium-pass-badge.active{
-  background:linear-gradient(135deg,#ffe08a,#ff8f70);
-  color:#181208;
-  box-shadow:0 12px 28px rgba(255,175,95,.18);
-}
-.pass-columns-head{
-  display:grid;
-  grid-template-columns:120px minmax(0,1fr) minmax(0,1fr);
-  gap:10px;
-  padding:0 4px;
-  color:var(--muted);
-  font-size:.78rem;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-  font-weight:950;
-}
-.pass-rewards{
-  min-height:0!important;
-  max-height:none!important;
-  overflow:auto!important;
-  display:grid!important;
-  align-content:start;
-  gap:10px!important;
-  padding-right:4px;
-}
-.pass-row{
-  display:grid!important;
-  grid-template-columns:120px minmax(0,1fr) minmax(0,1fr)!important;
-  gap:10px!important;
-  padding:12px!important;
-  align-items:stretch!important;
-  border-radius:18px!important;
-  background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.035))!important;
-  border:1px solid rgba(255,255,255,.10)!important;
-  box-shadow:0 12px 28px rgba(0,0,0,.18)!important;
-  min-width:0!important;
-  overflow:hidden!important;
-}
-.pass-row.ready{
-  border-color:rgba(255,210,115,.22)!important;
-}
-.pass-row-level{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:4px;
-  min-width:0;
-}
-.pass-row-level b{
-  font-size:1rem;
-  white-space:nowrap;
-}
-.pass-row-level small{
-  color:var(--muted);
-}
-.pass-track{
-  min-width:0!important;
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:16px;
-  padding:10px;
-  background:rgba(255,255,255,.045);
-  display:grid;
-  grid-template-rows:auto minmax(32px,1fr) auto;
-  gap:8px;
-  overflow:hidden;
-}
-.pass-track p{
-  margin:0;
-  color:var(--text);
-  font-weight:800;
-  line-height:1.25;
-  overflow:hidden;
-}
-.pass-track button{
-  width:100%;
-  min-height:38px;
-}
-.premium-track{
-  background:linear-gradient(135deg,rgba(255,224,138,.12),rgba(255,111,128,.07));
-}
-.premium-track.locked{
-  filter:saturate(.68);
-  opacity:.70;
-}
-.premium-track.unlocked{
-  border-color:rgba(255,210,112,.22);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
-}
-
-.premium-activate-panel{
-  border-color:rgba(255,210,112,.22)!important;
-  background:linear-gradient(180deg,rgba(255,210,112,.085),rgba(255,255,255,.035))!important;
-}
-.premium-key-row{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  gap:10px;
-  margin:12px 0;
-}
-.premium-key-row input{
-  min-width:0;
-  min-height:44px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(0,0,0,.18);
-  color:var(--text);
-  padding:0 12px;
-  text-transform:uppercase;
-}
-.premium-benefits-mini{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  color:var(--muted);
-}
-.premium-benefits-mini b{
-  color:var(--text);
-}
-.premium-benefits-mini span{
-  padding:7px 9px;
-  border-radius:999px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.08);
-  font-size:.82rem;
-}
-.premium-ok{
-  color:#ffe08a!important;
-  font-weight:900;
-}
-.backup-panel{
-  grid-column:1/-1;
-}
-
-/* correção dos containers principais */
-.card,.item,.panel-soft,.quick-buy,.stage,.top-hud,.quick-shop,.side{
-  min-width:0;
-}
-.item h3,.card h3,.quick-buy h3,.quick-buy small{
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.screen.active{
-  min-width:0!important;
-}
-.grid-cards,.list,.settings-grid{
-  min-width:0!important;
-}
-
-@media screen and (min-width:901px){
-  .center{
-    min-width:0!important;
-  }
-  #screen-pass.active{
-    overflow:hidden!important;
-  }
-  #screen-settings.active{
-    overflow:auto!important;
-    padding-right:3px;
-  }
-  #screen-shop.active,
-  #screen-pets.active,
-  #screen-missions.active,
-  #screen-ranking.active,
-  #screen-skins.active{
-    overflow:hidden!important;
-  }
-}
-
-@media screen and (max-width:900px){
-  .pass-layout{
-    overflow:visible;
-    display:block;
-  }
-  .pass-columns-head{
-    display:none;
-  }
-  .pass-rewards{
-    overflow:visible!important;
-    padding-right:0;
-  }
-  .pass-row{
-    grid-template-columns:1fr!important;
-  }
-  .pass-title-row{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-  .premium-key-row{
-    grid-template-columns:1fr;
-  }
-  .premium-benefits-mini span{
-    font-size:.72rem;
-  }
+@media(max-width:900px){
   .premium-thanks-box h2{
     font-size:1.55rem;
   }
-}
-
-
-/* V12.9 Código privado no jogo */
-.code-private-panel{padding:18px!important;max-width:760px;margin:0 auto}
-.code-private-panel h3{font-size:1.45rem;margin:10px 0 6px}
-.code-private-panel p{color:var(--muted);line-height:1.5}
-.code-private-panel .code-box{margin:14px 0}
-.code-rules{display:flex;flex-wrap:wrap;gap:8px}
-.code-rules span{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);color:var(--muted);font-size:.84rem}
-@media(max-width:900px){.code-private-panel{max-width:none;padding:14px!important}}
-
-
-/* V13.5 Stable Rollback — remove apenas o bloqueio da tela de entrada */
-#loadingScreen.hidden,
-.loading-screen.hidden{
-  display:none!important;
-  opacity:0!important;
-  visibility:hidden!important;
-  pointer-events:none!important;
 }
