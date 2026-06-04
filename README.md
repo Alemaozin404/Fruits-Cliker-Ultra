@@ -18,7 +18,6 @@ O jogo mistura progressão incremental, recompensas, skins, auras, pets, eventos
 - Abra ovos e colete pets de diferentes raridades.
 - Encontre pets secretos extremamente raros.
 - Enfrente bosses com tempo limitado.
-- Use tickets especiais para invocar desafios.
 - Participe de eventos com bônus globais.
 - Use códigos promocionais para ganhar recompensas.
 - Personalize sua maçã com skins e auras.
@@ -29,6 +28,8 @@ O jogo mistura progressão incremental, recompensas, skins, auras, pets, eventos
 O jogo foi pensado para ter atmosfera, brilho, profundidade e sensação de impacto.
 
 A maçã central possui aura, partículas, efeitos de clique, animações suaves e resposta visual a cada ação do jogador.
+
+No PC, a experiência ganha layout amplo, HUD elegante, loja rápida lateral e visual refinado para jogar com conforto.
 
 No celular, a experiência foi ajustada para parecer um app moderno, com navegação inferior, HUD limpo e interface confortável para toque.
 

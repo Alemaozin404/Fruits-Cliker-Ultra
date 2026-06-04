@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const VERSION = '12.4.0-mobile-hud-safe-area';
+  const VERSION = '12.6.0-pc-cinema-stability';
   const BASE_SAVE_KEY = 'maca_clicker_v10_world_pets_save';
   const AUTH_KEY = 'maca_clicker_auth_profiles_v1';
   const SESSION_KEY = 'maca_clicker_auth_session_v1';
@@ -603,7 +603,7 @@
     dom.saveBtn.onclick=()=>{save();toast('Jogo salvo.');}; dom.exportBtn.onclick=()=>{dom.saveBox.value=btoa(unescape(encodeURIComponent(JSON.stringify(state)))); dom.saveBox.select(); toast('Save exportado.');}; dom.importBtn.onclick=()=>{try{state=merge(defaultState(), JSON.parse(decodeURIComponent(escape(atob(dom.saveBox.value.trim()))))); normalizeState(); save(); applyVisualState(); render(); toast('Save importado.');}catch{toast('Save inválido.');}}; dom.resetBtn.onclick=()=>{ if(confirm('Resetar todo o progresso V10?')){ localStorage.removeItem(saveKey()); state=defaultState(); save(); location.reload(); } };
     window.addEventListener('storage',e=>{ if(e.key===ADMIN_KEY) checkAdminCommand(); });
     document.addEventListener('visibilitychange',()=>{ visible=!document.hidden; if(!visible) save(); }); window.addEventListener('beforeunload',save); window.addEventListener('resize',()=>{document.body.dataset.fx=fxMode(); renderQuickShop(); if(window.innerWidth <= 760 && state.screen==='shop'){ document.querySelector('.center')?.scrollTo({top:0,behavior:'auto'}); }});
-    setScreen(state.screen||'home'); render(); updateProfileBadge(); setupActivityWatcher(); requestAnimationFrame(loop); if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js?v=12.4.0-mobile-hud-safe-area').catch(()=>{}); }
+    setScreen(state.screen||'home'); render(); updateProfileBadge(); setupActivityWatcher(); requestAnimationFrame(loop); if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js?v=12.6.0-pc-cinema-stability').catch(()=>{}); }
   }
   init();
 })();
