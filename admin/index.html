@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070816" />
+  <title>Admin • Maçã Clicker Ultra</title>
+  <link rel="stylesheet" href="admin.css?v=12.2.0-admin-command-sanitize-cachefix" />
+</head>
+<body>
+  <main class="admin-shell">
+    <section id="lock" class="panel lock">
+      <span class="chip">/admin secreto</span>
+      <h1>Painel Admin</h1>
+      <p>Entre para ativar eventos, disparar boss, criar códigos e enviar comandos globais reais para todos os jogadores conectados, quando o Firebase estiver configurado.</p>
+      <input id="adminPass" type="password" placeholder="Senha admin" />
+      <button id="unlockBtn">Entrar</button>
+      <small>Senha padrão: <b>admin2117</b>. Para produção, troque em <b>global-config.js</b>.</small>
+    </section>
+
+    <section id="panel" class="panel hidden">
+      <div class="head">
+        <div>
+          <span class="chip">Maçã Clicker Ultra</span>
+          <h1>Console Admin Cinema</h1>
+          <p>Comandos usam Firebase Realtime Database para chegar em todos os jogadores online. Se o Firebase não estiver configurado, cai em modo local.</p>
+        </div>
+        <a href="../index.html">Voltar ao jogo</a>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h2>Eventos globais</h2>
+          <label>Duração em minutos</label>
+          <input id="eventMinutes" type="number" value="8" min="1" />
+          <button data-event="double">Ativar Evento 2x + chuva</button>
+          <button data-event="welison">Ativar Welison azul</button>
+          <button data-event="rare">Ativar Evento raro</button>
+          <button data-event="boss" class="danger">Invocar Boss global</button>
+        </article>
+
+        <article class="card">
+          <h2>Dar maçãs</h2>
+          <label>Quantidade</label>
+          <input id="fruitAmount" type="number" value="10000" min="0" />
+          <button id="giveFruits">Enviar recompensa global</button>
+        </article>
+
+        <article class="card wide">
+          <h2>Diagnóstico Firebase</h2>
+          <p>Se aparecer erro de comando global, normalmente é Realtime Database não criado, databaseURL errado ou regras bloqueando leitura/escrita.</p>
+          <pre>{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}</pre>
+        </article>
+
+        <article class="card wide">
+          <h2>Criar código</h2>
+          <div class="code-grid">
+            <input id="codeName" placeholder="NOME_DO_CODIGO" />
+            <input id="codeFruits" type="number" placeholder="Maçãs" value="5000" />
+            <input id="codeXp" type="number" placeholder="XP passe" value="50" />
+            <select id="codeSkin">
+              <option value="">Sem skin</option>
+              <option value="gold">Maçã dourada</option>
+              <option value="royal">Maçã realeza</option>
+              <option value="nebula">Maçã nebulosa</option>
+              <option value="voidlord">Maçã Lorde Void</option>
+            </select>
+            <select id="codeAura">
+              <option value="">Sem aura</option>
+              <option value="gold">Aura Dourada</option>
+              <option value="blue">Aura Azul</option>
+              <option value="crimson">Aura Carmesim</option>
+              <option value="void">Aura Void</option>
+            </select>
+          </div>
+          <button id="createCode">Criar / Atualizar código</button>
+          <pre id="codesList">Nenhum código admin criado.</pre>
+        </article>
+      </div>
+
+      <div id="globalStatus" class="log">Conectando ao sistema global...</div>
+      <div id="log" class="log">Pronto.</div>
+    </section>
+  </main>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-database-compat.js"></script>
+  <script src="../global-config.js?v=12.2.0-admin-command-sanitize-cachefix"></script>
+  <script src="admin.js?v=12.2.0-admin-command-sanitize-cachefix"></script>
+</body>
+</html>

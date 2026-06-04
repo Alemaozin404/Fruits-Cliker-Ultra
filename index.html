@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#060814" />
+  <meta name="description" content="Maçã Clicker Ultra V11.9: Firebase já configurado no projeto fruits-cliker-play, admin global, eventos/códigos para todos os jogadores e mobile cinema preservado." />
+  <title>Maçã Clicker Ultra V11.9 STABILITY PC MOBILE</title>
+  <link rel="manifest" href="manifest.webmanifest?v=12.2.0-admin-command-sanitize-cachefix" />
+  <link rel="stylesheet" href="style.css?v=12.2.0-admin-command-sanitize-cachefix" />
+</head>
+<body class="theme-farm" data-fx="auto">
+  <div id="loadingScreen" class="loading-screen">
+    <div class="loader-card">
+      <div class="loader-logo">🍎</div>
+      <h1>Maçã Clicker <b>V11.9</b></h1>
+      <p>Global admin • Eventos online • Mobile cinema</p>
+      <div class="loader-bar"><i id="loaderBar"></i></div>
+      <button id="startBtn" class="primary big hidden">Jogar</button>
+    </div>
+  </div>
+
+  <div id="introCinematic" class="intro-cinematic hidden">
+    <div class="intro-film-grain"></div>
+    <div class="intro-card">
+      <span class="chip">Apresentação do jogo</span>
+      <h2 id="introTitle">Maçã Clicker Cinema Luxe</h2>
+      <p id="introLine">Uma experiência de clique com aura, luxo, progresso e atmosfera cinematográfica.</p>
+      <div id="introProgress" class="intro-progress"></div>
+      <div class="row intro-actions">
+        <button id="skipIntroBtn" class="secondary">Pular</button>
+        <button id="introContinueBtn" class="primary hidden">Entrar no jogo</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="storyModal" class="modal hidden">
+    <div class="modal-box story-box">
+      <span class="chip">Tutorial cinema</span>
+      <h2 id="tutorialTitle">Aprenda o essencial em poucos segundos.</h2>
+      <p id="tutorialDesc">Tudo aparece com animação: clique, evolua, abra ovos, invoque bosses e use códigos especiais.</p>
+      <div class="tutorial-progress"><i id="tutorialProgress"></i></div>
+      <div id="tutorialStepsWrap" class="story-steps tutorial-steps">
+        <b data-step="0">1. Clique na maçã para ganhar maçãs.</b>
+        <b data-step="1">2. Use a loja rápida para comprar upgrades.</b>
+        <b data-step="2">3. Abra ovos e equipe pets.</b>
+        <b data-step="3">4. Desbloqueie mundos com multiplicadores.</b>
+        <b data-step="4">5. Invoque bosses com entrada cinematográfica.</b>
+        <b data-step="5">6. Use códigos promocionais animados.</b>
+      </div>
+      <div class="row tutorial-actions">
+        <button id="tutorialSkipBtn" class="secondary">Pular</button>
+        <button id="closeStoryBtn" class="primary">Próximo</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cinema-bars" aria-hidden="true"><i></i><i></i></div>
+  <div class="world-bg" aria-hidden="true">
+    <div class="stars"></div>
+    <div class="deep-fog fog-a"></div>
+    <div class="deep-fog fog-b"></div>
+    <div class="lens-flare"></div>
+    <div class="sun-glow"></div>
+    <div class="cinema-light l1"></div>
+    <div class="cinema-light l2"></div>
+    <div id="particleLayer" class="particle-layer"></div>
+  </div>
+
+
+  <div id="bossCinematic" class="boss-cinematic hidden" aria-hidden="true">
+    <div class="boss-cinema-grain"></div>
+    <div class="boss-cinema-core">
+      <span class="chip danger-chip">alerta de combate</span>
+      <h2>BOSS INICIADO</h2>
+      <p id="bossCinematicName">Rei Caveira do Pomar</p>
+      <i></i>
+    </div>
+  </div>
+
+  <div id="tutorialSpotlight" class="tutorial-spotlight hidden" aria-hidden="true"></div>
+  <div id="toastStack" class="toast-stack" aria-live="polite"></div>
+
+  <div id="loginOverlay" class="login-overlay hidden">
+    <div class="login-card panel">
+      <span class="chip">Login local protegido</span>
+      <h2>Entrar no Maçã Clicker</h2>
+      <p>Use nome e senha. O jogo cria secretamente um ID único para salvar o progresso desse login.</p>
+      <input id="loginName" placeholder="Nome do jogador" autocomplete="username" />
+      <input id="loginPassword" placeholder="Senha" type="password" autocomplete="current-password" />
+      <button id="loginBtn" class="primary full">Entrar / Criar conta</button>
+      <small id="loginHint">Seu ID não aparece no jogo, mas protege o save local contra troca simples de conta.</small>
+    </div>
+  </div>
+
+  <div id="afkOverlay" class="login-overlay afk-overlay hidden">
+    <div class="login-card panel afk-card">
+      <span class="chip danger-chip">verificador de atividade</span>
+      <h2>Tem alguém jogando?</h2>
+      <p>Sem interação detectada. Confirme para continuar jogando.</p>
+      <strong class="afk-count"><span id="afkCountdown">30</span>s</strong>
+      <button id="afkYesBtn" class="primary full">Sim, estou jogando</button>
+    </div>
+  </div>
+
+  <main class="app-shell">
+    <aside class="side panel">
+      <div class="brand">
+        <span class="version">V11.9</span>
+        <h1>Maçã<br><b>Clicker</b></h1>
+        <em class="brand-cut">STABILITY PC MOBILE</em>
+        <p id="worldSubtitle">Fazenda inicial • multiplicador x1</p>
+      </div>
+
+      <button id="mobileMenuBtn" class="menu-toggle">☰ Menu</button>
+
+      <nav id="mainNav" class="main-nav">
+        <button class="active" data-screen="home">🏠 <b>Jogo</b><small>Clique</small></button>
+        <button data-screen="worlds">🗺️ <b>Mundos</b><small>Mapa</small></button>
+        <button data-screen="shop">🛒 <b>Loja</b><small>Upgrades</small></button>
+        <button data-screen="pets">🐾 <b>Pets</b><small>Ovos / fusão</small></button>
+        <button data-screen="boss">👑 <b>Boss</b><small>Eventos</small></button>
+        <button data-screen="pass">🎫 <b>Passe</b><small>Temporada</small></button>
+        <button data-screen="missions">🎯 <b>Missões</b><small>Diárias</small></button>
+        <button data-screen="ranking">🏆 <b>Ranking</b><small>Local</small></button>
+        <button data-screen="skins">🎨 <b>Skins</b><small>Maçã</small></button>
+        <button data-screen="codes">🎁 <b>Códigos</b><small>Brindes</small></button>
+        <button data-screen="settings">⚙️ <b>Config</b><small>Save / som</small></button>
+      </nav>
+
+      <div class="event-ticker">
+        <strong id="eventTitle">Eventos carregando...</strong>
+        <small id="eventHint">Agenda automática</small>
+      </div>
+    </aside>
+
+    <section class="center">
+      <header class="top-hud panel">
+        <div>
+          <span class="eyebrow">maçãs</span>
+          <strong id="fruitCount">0</strong>
+        </div>
+        <div class="hud-grid">
+          <span><b id="clickStat">+1</b><small>clique</small></span>
+          <span><b id="autoStat">0/s</b><small>auto</small></span>
+          <span><b id="multiStat">x1</b><small>multi</small></span>
+          <span><b id="petStat">x1</b><small>pets</small></span>
+          <span><b id="worldStat">x1</b><small>mundo</small></span>
+        </div>
+      </header>
+
+      <section id="screen-home" class="screen active">
+        <div class="screen-head home-screen-head">
+          <div>
+            <h2>Início</h2>
+            <p>Área principal organizada em gaveta para evitar sobreposição, corte e bug visual.</p>
+          </div>
+        </div>
+        <div class="stage panel home-stage">
+          <div class="world-badge"><span id="worldIcon">🌾</span><b id="worldName">Fazenda inicial</b></div>
+          <div class="mini-hud">
+            <span>🔥 <b id="comboText">Combo x1</b></span>
+            <span>⏳ <b id="offlineText">Online agora</b></span>
+            <span>🎫 Passe <b id="passMini">0</b></span>
+            <span>👑 Boss <b id="bossMini">Inativo</b></span>
+          </div>
+
+          <div id="bossAlert" class="boss-alert hidden">
+            <div>
+              <strong id="bossAlertName">Boss ativo</strong>
+              <small id="bossAlertTimer">00:00</small>
+            </div>
+            <i class="life"><em id="bossAlertLife"></em></i>
+          </div>
+
+          <div class="apple-zone">
+            <div class="cinema-orbital orbital-a"></div>
+            <div class="cinema-orbital orbital-b"></div>
+            <div class="apple-energy-grid"></div>
+            <div id="petOrbit" class="pet-orbit"></div>
+            <button id="appleBtn" class="apple-btn" aria-label="Coletar maçã">
+              <span class="apple-glow"></span>
+              <span class="apple-aura-ring ring-1"></span>
+              <span class="apple-aura-ring ring-2"></span>
+              <span class="apple-shine"></span>
+              <span id="appleSkin" class="apple-core">🍎</span>
+            </button>
+            <div id="floatLayer" class="float-layer"></div>
+          </div>
+
+          <div class="quick-actions" data-tutorial="Ações principais compactas">
+            <button id="claimDailyBtn" class="primary">🎁 Presente diário</button>
+            <button id="openBestEggBtn" class="secondary">🥚 Abrir melhor ovo</button>
+            <button id="summonBossBtn" class="secondary">👑 Invocar boss</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="screen-worlds" class="screen"><div class="screen-head"><h2>Mapa de mundos</h2><p>Desbloqueie áreas com fundo, música, multiplicador e loja própria.</p></div><div id="worldGrid" class="grid-cards"></div></section>
+      <section id="screen-shop" class="screen"><div class="screen-head"><h2>Loja do mundo</h2><p id="shopSubtitle">Upgrades principais e especiais do mundo atual.</p></div><div id="shopList" class="list"></div></section>
+      <section id="screen-pets" class="screen"><div class="screen-head"><h2>Pets e ovos</h2><p>Pets ficam numa gavetinha automática. Novos ovos foram adicionados; ET continua secreto apenas no Melhor Ovo com chance absurda.</p></div><div id="eggGrid" class="grid-cards compact"></div><h3>Seus pets</h3><div id="petList" class="list"></div></section>
+      <section id="screen-boss" class="screen"><div class="screen-head"><h2>Boss e eventos</h2><p>Boss aparece a cada 1 hora ou por ticket. Cada luta dura 3 minutos e o boss fica mais forte a cada prestígio.</p></div><div class="boss-card panel-soft"><div><h3 id="bossName">Nenhum boss ativo</h3><p id="bossDesc">Use ticket comprado na loja ou aguarde o evento horário.</p></div><i class="life"><em id="bossLife"></em></i><div class="boss-actions"><button id="bossTicketBtn" class="primary">Usar ticket boss</button><button id="weeklyBossBtn" class="secondary">Boss semanal</button></div></div><div id="eventList" class="list"></div></section>
+      <section id="screen-pass" class="screen"><div class="screen-head"><h2>Passe da Maçã</h2><p>Recompensas grátis e premium local/fake, sem pagamento real.</p></div><div class="pass-bar"><span id="passLevelText">Nível 0</span><i><em id="passBar"></em></i></div><div id="passRewards" class="list"></div></section>
+      <section id="screen-missions" class="screen"><div class="screen-head"><h2>Missões</h2><p>Missões diárias e semanais alimentam o passe.</p></div><div id="missionList" class="list"></div></section>
+      <section id="screen-ranking" class="screen"><div class="screen-head"><h2>Ranking local</h2><p>Salvo no navegador: cliques, maçãs, prestígio, boss e tempo jogado.</p></div><div id="rankingGrid" class="grid-cards compact"></div></section>
+      <section id="screen-skins" class="screen"><div class="screen-head"><h2>Skins e auras</h2><p>Troque a maçã e escolha uma aura com cor e efeitos próprios atrás dela.</p></div><div id="skinGrid" class="grid-cards compact"></div><h3>Auras</h3><div id="auraGrid" class="grid-cards compact"></div></section>
+      <section id="screen-codes" class="screen"><div class="screen-head"><h2>Códigos promocionais</h2><p>Use V10CINEMA, WELISON5X, MACADOURADA, BOSSUPDATE, HARDMODE, AURACINEMA ou códigos criados no /admin. Multiplicadores corrigidos para serem reais.</p></div><div id="codeShowcase" class="code-showcase panel-soft"><div><span class="chip">Código em destaque</span><h3 id="featuredCodeLabel">Surpresa cinematográfica</h3><p id="featuredCodeDesc">Revele um código com animação, preencha automaticamente e resgate direto.</p></div><div class="code-reveal-line"><b id="featuredCodeChip" class="featured-code-chip">••••••••</b><div class="row"><button id="revealCodeBtn" class="secondary">🎬 Revelar código</button><button id="useFeaturedCodeBtn" class="primary" disabled>⚡ Usar agora</button></div></div></div><div class="code-box panel-soft"><input id="codeInput" placeholder="Digite o código" /><button id="codeBtn" class="primary">Resgatar</button></div></section>
+      <section id="screen-settings" class="screen"><div class="screen-head"><h2>Configurações</h2><p>Som, música, performance, backup, PWA, save e login local.</p><small id="profileBadge" class="profile-badge">Sem login</small></div><div class="settings-grid"><div class="panel-soft"><h3>Áudio e performance</h3><button id="soundBtn" class="secondary">🔇 Som desligado</button><button id="musicBtn" class="secondary">🎵 Música desligada</button><button id="perfBtn" class="secondary">✨ Efeitos: Auto</button></div><div class="panel-soft"><h3>Backup</h3><textarea id="saveBox" placeholder="Exportar/importar save"></textarea><div class="row"><button id="saveBtn" class="secondary">Salvar</button><button id="exportBtn" class="secondary">Exportar</button><button id="importBtn" class="secondary">Importar</button><button id="resetBtn" class="danger">Resetar</button></div></div></div></section>
+    </section>
+
+    <aside id="quickShopPanel" class="quick-shop panel" aria-label="Loja rápida">
+      <div class="quick-shop-head">
+        <div>
+          <span class="eyebrow">compra fácil</span>
+          <h2>Loja rápida</h2>
+        </div>
+        <button id="quickShopToggle" class="secondary mini">🛒</button>
+      </div>
+      <p id="quickShopHint">Upgrades principais sempre ao lado para comprar sem procurar.</p>
+      <div id="quickShopList" class="quick-shop-list"></div>
+      <button id="openFullShopBtn" class="primary full">Abrir loja completa</button>
+    </aside>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-database-compat.js"></script>
+  <script src="global-config.js?v=12.2.0-admin-command-sanitize-cachefix"></script>
+  <script src="script.js?v=12.2.0-admin-command-sanitize-cachefix"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "Maçã Clicker Ultra V12.2",
+  "short_name": "Maçã V12.2",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#060814",
+  "theme_color": "#ffcc66",
+  "icons": [],
+  "description": "Admin global com Firebase, eventos online para todos os jogadores, códigos globais e mobile cinema preservado."
+}
