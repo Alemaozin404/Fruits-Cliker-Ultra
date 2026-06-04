@@ -1,5 +1,5 @@
-const CACHE='maca-v12-2-admin-command-sanitize-cachefix';
-const VERSION='12.2.0-admin-command-sanitize-cachefix';
+const CACHE='maca-v12-3-iphone-mobile-cinema';
+const VERSION='12.3.0-iphone-mobile-cinema';
 const ASSETS=['./','./index.html?v='+VERSION,'./style.css?v='+VERSION,'./script.js?v='+VERSION,'./global-config.js?v='+VERSION,'./manifest.webmanifest?v='+VERSION,'./admin/','./admin/index.html?v='+VERSION,'./admin/admin.css?v='+VERSION,'./admin/admin.js?v='+VERSION];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).catch(()=>{}));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim();});

@@ -36,5 +36,3 @@ Os bosses aparecem por tempo limitado e ficam mais fortes conforme o jogador evo
 Maçã Clicker Ultra é para quem gosta de evolução, coleção, dificuldade, recompensas e aquele sentimento de “só mais um clique”.
 
 **Prepare-se para transformar uma simples maçã em um império.**
-
-https://alemaozin404.github.io/Fruits-Cliker-Ultra/
