@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#070816" />
   <title>Admin • Maçã Clicker Ultra</title>
-  <link rel="stylesheet" href="admin.css?v=12.2.0-admin-command-sanitize-cachefix" />
+  <link rel="stylesheet" href="admin.css?v=12.7.0-premium-pass-admin-keys" />
 </head>
 <body>
   <main class="admin-shell">
@@ -86,10 +86,30 @@
       <div id="globalStatus" class="log">Conectando ao sistema global...</div>
       <div id="log" class="log">Pronto.</div>
     </section>
+  
+    <section class="admin-card premium-admin-card">
+      <span class="chip">Premium</span>
+      <h2>Criar key Premium</h2>
+      <p>Gere keys para ativar Premium no jogo. As keys podem durar 1 semana, 15 dias, 30 dias, 3 meses, 1 ano ou ser permanentes.</p>
+      <div class="admin-grid">
+        <select id="premiumKeyDuration">
+          <option value="7d">1 semana</option>
+          <option value="15d">15 dias</option>
+          <option value="30d">30 dias</option>
+          <option value="3m">3 meses</option>
+          <option value="1y">1 ano</option>
+          <option value="permanent">Permanente</option>
+        </select>
+        <input id="premiumKeyCustom" placeholder="Key personalizada opcional" />
+      </div>
+      <button id="createPremiumKeyBtn" class="primary">Criar key Premium</button>
+      <div id="premiumKeyResult" class="admin-result">Nenhuma key criada ainda.</div>
+    </section>
+
   </main>
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-database-compat.js"></script>
-  <script src="../global-config.js?v=12.2.0-admin-command-sanitize-cachefix"></script>
-  <script src="admin.js?v=12.2.0-admin-command-sanitize-cachefix"></script>
+  <script src="../global-config.js?v=12.7.0-premium-pass-admin-keys"></script>
+  <script src="admin.js?v=12.7.0-premium-pass-admin-keys"></script>
 </body>
 </html>

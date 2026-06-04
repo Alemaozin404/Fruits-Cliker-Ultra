@@ -174,3 +174,54 @@
     try{ await saveCode(name, code); }catch(err){ console.error(err); alert(firebaseErrorText(err)); status(firebaseErrorText(err)); }
   };
 })();
+
+
+function generatePremiumKey(duration){
+  const part = () => Math.random().toString(36).slice(2,6).toUpperCase();
+  const prefix = duration === 'permanent' ? 'PREM-LIFE' : 'PREM-' + duration.toUpperCase();
+  return `${prefix}-${part()}-${part()}-${part()}`;
+}
+
+function sanitizePremiumKey(key){
+  return String(key||'').trim().toUpperCase().replace(/\s+/g,'-');
+}
+
+async function createPremiumKey(){
+  const durationEl = document.getElementById('premiumKeyDuration');
+  const customEl = document.getElementById('premiumKeyCustom');
+  const resultEl = document.getElementById('premiumKeyResult');
+  const duration = durationEl?.value || '30d';
+  const key = sanitizePremiumKey(customEl?.value) || generatePremiumKey(duration);
+  const payload = {
+    key,
+    duration,
+    used:false,
+    createdAt:Date.now(),
+    createdBy:'admin'
+  };
+
+  try{
+    if(window.globalDb){
+      await window.globalDb.ref('premiumKeys/'+key).set(payload);
+    }else if(typeof globalDb !== 'undefined' && globalDb){
+      await globalDb.ref('premiumKeys/'+key).set(payload);
+    }else{
+      const local = JSON.parse(localStorage.getItem('maca_premium_keys_local_v1') || '{}');
+      local[key] = payload;
+      localStorage.setItem('maca_premium_keys_local_v1', JSON.stringify(local));
+    }
+    if(resultEl){
+      resultEl.innerHTML = `<b>Key criada:</b><br><code>${key}</code><br><small>Duração: ${duration}</small>`;
+    }
+    customEl && (customEl.value='');
+    alert('Key Premium criada com sucesso!');
+  }catch(err){
+    console.error(err);
+    alert('Erro ao criar key Premium: ' + (err?.message || err));
+    if(resultEl) resultEl.textContent = 'Erro ao criar key. Confira Firebase/Rules.';
+  }
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('createPremiumKeyBtn')?.addEventListener('click', createPremiumKey);
+});

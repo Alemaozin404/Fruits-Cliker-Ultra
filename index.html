@@ -4,17 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#060814" />
-  <meta name="description" content="Maçã Clicker Ultra V12.6 PC Cinema Stability" />
-  <title>Maçã Clicker Ultra V12.6 PC Cinema Stability</title>
-  <link rel="manifest" href="manifest.webmanifest?v=12.6.0-pc-cinema-stability" />
-  <link rel="stylesheet" href="style.css?v=12.6.0-pc-cinema-stability" />
+  <meta name="description" content="Maçã Clicker Ultra V12.7 Premium Pass Admin Keys" />
+  <title>Maçã Clicker Ultra V12.7 Premium Pass Admin Keys</title>
+  <link rel="manifest" href="manifest.webmanifest?v=12.7.0-premium-pass-admin-keys" />
+  <link rel="stylesheet" href="style.css?v=12.7.0-premium-pass-admin-keys" />
 </head>
 <body class="theme-farm" data-fx="auto">
   <div id="loadingScreen" class="loading-screen">
     <div class="loader-card">
       <div class="loader-logo">🍎</div>
-      <h1>Maçã Clicker <b>V12.6</b></h1>
-      <p>Global admin • PC cinema estável • mobile reconstruído</p>
+      <h1>Maçã Clicker <b>V12.7</b></h1>
+      <p>Global admin • Premium por key • Passe corrigido</p>
       <div class="loader-bar"><i id="loaderBar"></i></div>
       <button id="startBtn" class="primary big hidden">Jogar</button>
     </div>
@@ -106,9 +106,9 @@
   <main class="app-shell">
     <aside class="side panel">
       <div class="brand">
-        <span class="version">V12.6</span>
+        <span class="version">V12.7</span>
         <h1>Maçã<br><b>Clicker</b></h1>
-        <em class="brand-cut">PC CINEMA STABILITY</em>
+        <em class="brand-cut">PREMIUM PASS KEYS</em>
         <p id="worldSubtitle">Fazenda inicial • multiplicador x1</p>
       </div>
 
@@ -200,12 +200,70 @@
       <section id="screen-shop" class="screen"><div class="screen-head"><h2>Loja do mundo</h2><p id="shopSubtitle">Upgrades principais e especiais do mundo atual.</p></div><div id="shopList" class="list"></div></section>
       <section id="screen-pets" class="screen"><div class="screen-head"><h2>Pets e ovos</h2><p>Pets ficam numa gavetinha automática. Novos ovos foram adicionados; ET continua secreto apenas no Melhor Ovo com chance absurda.</p></div><div id="eggGrid" class="grid-cards compact"></div><h3>Seus pets</h3><div id="petList" class="list"></div></section>
       <section id="screen-boss" class="screen"><div class="screen-head"><h2>Boss e eventos</h2><p>Boss aparece a cada 1 hora ou por ticket. Cada luta dura 3 minutos e o boss fica mais forte a cada prestígio.</p></div><div class="boss-card panel-soft"><div><h3 id="bossName">Nenhum boss ativo</h3><p id="bossDesc">Use ticket comprado na loja ou aguarde o evento horário.</p></div><i class="life"><em id="bossLife"></em></i><div class="boss-actions"><button id="bossTicketBtn" class="primary">Usar ticket boss</button><button id="weeklyBossBtn" class="secondary">Boss semanal</button></div></div><div id="eventList" class="list"></div></section>
-      <section id="screen-pass" class="screen"><div class="screen-head"><h2>Passe da Maçã</h2><p>Recompensas grátis e premium local/fake, sem pagamento real.</p></div><div class="pass-bar"><span id="passLevelText">Nível 0</span><i><em id="passBar"></em></i></div><div id="passRewards" class="list"></div></section>
+      <section id="screen-pass" class="screen">
+        <div class="screen-head">
+          <h2>Passe da Maçã</h2>
+          <p>Ganhe XP jogando, complete missões e desbloqueie recompensas grátis e premium.</p>
+        </div>
+        <div class="pass-panel panel-soft">
+          <div class="pass-title-row">
+            <div>
+              <span class="chip">Temporada ativa</span>
+              <h3 id="passLevelText">Nível 0</h3>
+              <p id="passPremiumHint">Ative o Premium para liberar a trilha dourada.</p>
+            </div>
+            <strong id="premiumPassBadge" class="premium-pass-badge">Free</strong>
+          </div>
+          <div class="pass-bar"><i><em id="passBar"></em></i></div>
+        </div>
+        <div id="passRewards" class="pass-rewards"></div>
+      </section>
       <section id="screen-missions" class="screen"><div class="screen-head"><h2>Missões</h2><p>Missões diárias e semanais alimentam o passe.</p></div><div id="missionList" class="list"></div></section>
       <section id="screen-ranking" class="screen"><div class="screen-head"><h2>Ranking local</h2><p>Salvo no navegador: cliques, maçãs, prestígio, boss e tempo jogado.</p></div><div id="rankingGrid" class="grid-cards compact"></div></section>
       <section id="screen-skins" class="screen"><div class="screen-head"><h2>Skins e auras</h2><p>Troque a maçã e escolha uma aura com cor e efeitos próprios atrás dela.</p></div><div id="skinGrid" class="grid-cards compact"></div><h3>Auras</h3><div id="auraGrid" class="grid-cards compact"></div></section>
       <section id="screen-codes" class="screen"><div class="screen-head"><h2>Códigos promocionais</h2><p>Use V10CINEMA, WELISON5X, MACADOURADA, BOSSUPDATE, HARDMODE, AURACINEMA ou códigos criados no /admin. Multiplicadores corrigidos para serem reais.</p></div><div id="codeShowcase" class="code-showcase panel-soft"><div><span class="chip">Código em destaque</span><h3 id="featuredCodeLabel">Surpresa cinematográfica</h3><p id="featuredCodeDesc">Revele um código com animação, preencha automaticamente e resgate direto.</p></div><div class="code-reveal-line"><b id="featuredCodeChip" class="featured-code-chip">••••••••</b><div class="row"><button id="revealCodeBtn" class="secondary">🎬 Revelar código</button><button id="useFeaturedCodeBtn" class="primary" disabled>⚡ Usar agora</button></div></div></div><div class="code-box panel-soft"><input id="codeInput" placeholder="Digite o código" /><button id="codeBtn" class="primary">Resgatar</button></div></section>
-      <section id="screen-settings" class="screen"><div class="screen-head"><h2>Configurações</h2><p>Som, música, performance, backup, PWA, save e login local.</p><small id="profileBadge" class="profile-badge">Sem login</small></div><div class="settings-grid"><div class="panel-soft"><h3>Áudio e performance</h3><button id="soundBtn" class="secondary">🔇 Som desligado</button><button id="musicBtn" class="secondary">🎵 Música desligada</button><button id="perfBtn" class="secondary">✨ Efeitos: Auto</button></div><div class="panel-soft"><h3>Backup</h3><textarea id="saveBox" placeholder="Exportar/importar save"></textarea><div class="row"><button id="saveBtn" class="secondary">Salvar</button><button id="exportBtn" class="secondary">Exportar</button><button id="importBtn" class="secondary">Importar</button><button id="resetBtn" class="danger">Resetar</button></div></div></div></section>
+      <section id="screen-settings" class="screen">
+        <div class="screen-head">
+          <h2>Configurações</h2>
+          <p>Som, música, performance, backup, PWA, save, login local e ativação Premium.</p>
+          <small id="profileBadge" class="profile-badge">Sem login</small>
+        </div>
+        <div class="settings-grid">
+          <div class="panel-soft premium-activate-panel">
+            <span class="chip">Premium</span>
+            <h3>Ativar Premium</h3>
+            <p id="premiumStatusText">Nenhum Premium ativo.</p>
+            <div class="premium-key-row">
+              <input id="premiumKeyInput" placeholder="Digite sua key premium" />
+              <button id="activatePremiumBtn" class="primary">Ativar</button>
+            </div>
+            <div class="premium-benefits-mini">
+              <b>Vantagens:</b>
+              <span>+35% cliques</span>
+              <span>+25% auto</span>
+              <span>+15% sorte em ovos</span>
+              <span>+20% dano boss</span>
+              <span>trilha premium do passe</span>
+            </div>
+          </div>
+          <div class="panel-soft">
+            <h3>Áudio e performance</h3>
+            <button id="soundBtn" class="secondary">🔇 Som desligado</button>
+            <button id="musicBtn" class="secondary">🎵 Música desligada</button>
+            <button id="perfBtn" class="secondary">✨ Efeitos: Auto</button>
+          </div>
+          <div class="panel-soft backup-panel">
+            <h3>Backup</h3>
+            <textarea id="saveBox" placeholder="Exportar/importar save"></textarea>
+            <div class="row">
+              <button id="saveBtn" class="secondary">Salvar</button>
+              <button id="exportBtn" class="secondary">Exportar</button>
+              <button id="importBtn" class="secondary">Importar</button>
+              <button id="resetBtn" class="danger">Resetar</button>
+            </div>
+          </div>
+        </div>
+      </section>
     </section>
 
     <aside id="quickShopPanel" class="quick-shop panel" aria-label="Loja rápida">
@@ -224,7 +282,7 @@
 
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-database-compat.js"></script>
-  <script src="global-config.js?v=12.6.0-pc-cinema-stability"></script>
-  <script src="script.js?v=12.6.0-pc-cinema-stability"></script>
+  <script src="global-config.js?v=12.7.0-premium-pass-admin-keys"></script>
+  <script src="script.js?v=12.7.0-premium-pass-admin-keys"></script>
 </body>
 </html>
